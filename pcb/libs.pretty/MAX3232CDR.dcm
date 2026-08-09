@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP MAX3232CDR
+D Line Transmitter/Receiver 2TR 2TX 2RX MAX3232CDR, Dual Line Transceiver, EIA/TIA-232-F, RS-232, V.28 2-TX 2-RX 2-TRX, 3.3 V, 5 V, 16-Pin SOIC
+K
+F http://www.ti.com/lit/ds/symlink/max3232.pdf
+$ENDCMP
+#
+#End Doc Library

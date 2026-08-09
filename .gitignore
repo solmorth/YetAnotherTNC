@@ -67,3 +67,24 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+
+
+# KiCad
+*-bak
+*.bak
+*.kicad_prl
+*-cache.lib
+*.kicad_pcb-bak
+*.sch-bak
+
+*.pro.user
+*.kicad_user_sys
+
+/gerber/
+/*.gbr
+/*.drl
+/*.pdf
+
+_autosave-*
+*.lck
