@@ -85,6 +85,7 @@ Testing/
 /*.gbr
 /*.drl
 /*.pdf
-
+.history/
+yatnc-backups/
 _autosave-*
 *.lck

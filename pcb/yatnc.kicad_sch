@@ -3918,6 +3918,12 @@
 		(uuid "3129c979-951c-4a04-a30d-b86a83ff4602")
 	)
 	(junction
+		(at 63.5 104.14)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "322a0528-dea8-4a97-bfe4-a30af757bb18")
+	)
+	(junction
 		(at 60.96 80.01)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3934,6 +3940,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5b49f15f-9196-40c0-a8d8-610607483cfa")
+	)
+	(junction
+		(at 58.42 96.52)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "6b5e50e5-babf-460c-9231-4564a63bb8db")
 	)
 	(junction
 		(at 171.45 95.25)
@@ -3966,12 +3978,6 @@
 		(uuid "cdd58e60-bfa5-459c-85a2-db2d5f74d97f")
 	)
 	(junction
-		(at 52.07 74.93)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "df195375-2eac-44c5-a838-b806f67c153d")
-	)
-	(junction
 		(at 35.56 101.6)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3982,12 +3988,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e9625af1-a54c-4658-988e-84aee64f3262")
-	)
-	(junction
-		(at 62.23 104.14)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "f074ba38-8bb9-46b3-a755-eb3001a6b1a0")
 	)
 	(no_connect
 		(at 139.7 77.47)
@@ -4293,7 +4293,7 @@
 	)
 	(wire
 		(pts
-			(xy 59.69 104.14) (xy 62.23 104.14)
+			(xy 59.69 104.14) (xy 63.5 104.14)
 		)
 		(stroke
 			(width 0)
@@ -4310,16 +4310,6 @@
 			(type default)
 		)
 		(uuid "2e6241e2-4ac5-4039-a890-55edca293d05")
-	)
-	(wire
-		(pts
-			(xy 60.96 64.77) (xy 52.07 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3228f210-0553-471f-bcea-5c7c1765c6ee")
 	)
 	(wire
 		(pts
@@ -4363,6 +4353,16 @@
 	)
 	(wire
 		(pts
+			(xy 63.5 64.77) (xy 63.5 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3e3ec004-9146-4086-98e4-f1cdf6355b89")
+	)
+	(wire
+		(pts
 			(xy 92.71 86.36) (xy 105.41 86.36)
 		)
 		(stroke
@@ -4403,6 +4403,16 @@
 	)
 	(wire
 		(pts
+			(xy 60.96 96.52) (xy 58.42 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "47b0a56f-3c7b-432c-8c55-0304a30f00f1")
+	)
+	(wire
+		(pts
 			(xy 26.67 110.49) (xy 35.56 110.49)
 		)
 		(stroke
@@ -4420,16 +4430,6 @@
 			(type default)
 		)
 		(uuid "4aeff82d-c40f-4eea-a05e-1cd15df0bbfa")
-	)
-	(wire
-		(pts
-			(xy 60.96 96.52) (xy 62.23 96.52)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4c70a7f3-7d2e-4622-ab39-0a3ba1f6764f")
 	)
 	(wire
 		(pts
@@ -4563,16 +4563,6 @@
 	)
 	(wire
 		(pts
-			(xy 62.23 104.14) (xy 66.04 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "66559195-c904-4236-833c-39c266806167")
-	)
-	(wire
-		(pts
 			(xy 209.55 72.39) (xy 214.63 72.39)
 		)
 		(stroke
@@ -4580,16 +4570,6 @@
 			(type default)
 		)
 		(uuid "67249722-84e7-46d2-8403-d8100942fd83")
-	)
-	(wire
-		(pts
-			(xy 60.96 96.52) (xy 60.96 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6b8dcf9b-9780-4e43-af2a-dbe484516101")
 	)
 	(wire
 		(pts
@@ -4773,16 +4753,6 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 64.77) (xy 52.07 74.93)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "87a2176c-5866-4d85-8a49-cf3b43b07588")
-	)
-	(wire
-		(pts
 			(xy 41.91 58.42) (xy 41.91 66.04)
 		)
 		(stroke
@@ -4790,6 +4760,16 @@
 			(type default)
 		)
 		(uuid "9191d3c9-24d2-43cc-8bde-f8ebd0dcc6f5")
+	)
+	(wire
+		(pts
+			(xy 60.96 91.44) (xy 60.96 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9bcdb949-9308-4850-99b8-43b7516eee19")
 	)
 	(wire
 		(pts
@@ -4830,6 +4810,16 @@
 			(type default)
 		)
 		(uuid "aa242ca3-1fca-47f6-a0dd-21943cd4e499")
+	)
+	(wire
+		(pts
+			(xy 63.5 104.14) (xy 66.04 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "acae9592-630a-4aa0-86fc-201dbf458af2")
 	)
 	(wire
 		(pts
@@ -5003,7 +4993,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 92.71) (xy 58.42 99.06)
+			(xy 58.42 92.71) (xy 58.42 96.52)
 		)
 		(stroke
 			(width 0)
@@ -5023,6 +5013,16 @@
 	)
 	(wire
 		(pts
+			(xy 58.42 96.52) (xy 58.42 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d17d8454-77f5-4ea7-9490-675d65c2ca67")
+	)
+	(wire
+		(pts
 			(xy 105.41 96.52) (xy 115.57 96.52)
 		)
 		(stroke
@@ -5033,16 +5033,6 @@
 	)
 	(wire
 		(pts
-			(xy 62.23 96.52) (xy 62.23 104.14)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d3881926-6b66-45b6-aad7-c71048e81310")
-	)
-	(wire
-		(pts
 			(xy 46.99 31.75) (xy 55.88 31.75)
 		)
 		(stroke
@@ -5050,6 +5040,16 @@
 			(type default)
 		)
 		(uuid "d496b775-73b9-4c3b-9803-ef3b5021a897")
+	)
+	(wire
+		(pts
+			(xy 60.96 64.77) (xy 63.5 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d50cebb8-ffb4-49fa-8599-2ac1554b73ae")
 	)
 	(wire
 		(pts
@@ -5356,7 +5356,7 @@
 			(uuid "f1b3cf09-31c7-49a7-8760-a4542126edeb")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J7")
 					(unit 1)
@@ -5434,7 +5434,7 @@
 			(uuid "d922911e-3d64-4a98-806b-73065f621740")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR010")
 					(unit 1)
@@ -5512,7 +5512,7 @@
 			(uuid "8f995832-47b2-4929-933e-1c4f6cbfd8b2")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#FLG01")
 					(unit 1)
@@ -5594,7 +5594,7 @@
 			(uuid "c9ae6fb6-9ef8-4677-93f7-0d0b2be0a2ce")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C6")
 					(unit 1)
@@ -5671,7 +5671,7 @@
 			(uuid "e695acb0-8022-43f8-9e78-93b875cf0bab")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR011")
 					(unit 1)
@@ -5689,7 +5689,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "18a24b6b-3c5e-48f1-bbbc-7bd769682284")
 		(property "Reference" "#PWR05"
 			(at 55.88 90.17 0)
@@ -5703,7 +5702,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 58.42 95.2499 0)
+			(at 54.356 93.726 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5750,7 +5749,7 @@
 			(uuid "92f2d63d-68b3-4016-b760-ed9e5c8c187e")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR05")
 					(unit 1)
@@ -5831,7 +5830,7 @@
 			(uuid "3146536b-860f-42ac-bc8d-a0bbcc21cbae")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J3")
 					(unit 1)
@@ -5911,7 +5910,7 @@
 			(uuid "1b36a3fd-8790-43eb-80c4-004ef62cf668")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "R3")
 					(unit 1)
@@ -6002,7 +6001,7 @@
 			(uuid "d529fe87-93cc-47ec-a9bf-f39751e6190d")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "D1")
 					(unit 1)
@@ -6082,7 +6081,7 @@
 			(uuid "69062e26-89bb-4aa4-a4a9-4b75e4846b47")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C3")
 					(unit 1)
@@ -6158,7 +6157,7 @@
 			)
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "H3")
 					(unit 1)
@@ -6262,7 +6261,7 @@
 			(uuid "41b7b276-4208-4a9a-9cb5-5b3b8f4d3dad")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J1")
 					(unit 1)
@@ -6338,7 +6337,7 @@
 			)
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "H2")
 					(unit 1)
@@ -6418,7 +6417,7 @@
 			(uuid "e9b4a431-de81-4d2c-bb29-b16ef820dbf5")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "R4")
 					(unit 1)
@@ -6501,7 +6500,7 @@
 			(uuid "41df69d1-faab-4921-ad0c-2ca3403de5e9")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J4")
 					(unit 1)
@@ -6580,7 +6579,7 @@
 			(uuid "2208dd9d-2aae-44b6-9599-cff6f9ac9669")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR02")
 					(unit 1)
@@ -6658,7 +6657,7 @@
 			(uuid "ff22f040-09fa-4c1d-9bf0-eb214a832bd7")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR014")
 					(unit 1)
@@ -6736,7 +6735,7 @@
 			(uuid "d357849f-fdd3-4ccb-a2e6-5f4c83570813")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#FLG03")
 					(unit 1)
@@ -6816,7 +6815,7 @@
 			(uuid "e20c9704-dd8d-4f6c-9581-27da10ea1dfe")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "SW1")
 					(unit 1)
@@ -6894,7 +6893,7 @@
 			(uuid "a65aa992-de59-40ce-861f-47c667fde08d")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR09")
 					(unit 1)
@@ -6970,7 +6969,7 @@
 			)
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "H4")
 					(unit 1)
@@ -7052,7 +7051,7 @@
 			(uuid "9fe24559-16f5-430f-8534-dacf810dfeb6")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C2")
 					(unit 1)
@@ -7132,7 +7131,7 @@
 			(uuid "c0497680-840c-4cf8-9564-f1c81acca995")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C1")
 					(unit 1)
@@ -7210,7 +7209,7 @@
 			(uuid "3442b201-9998-4ddf-bd2b-09b9a8689c59")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR07")
 					(unit 1)
@@ -7288,7 +7287,7 @@
 			(uuid "57fecbef-823b-4172-94a0-6d6462dafa52")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR012")
 					(unit 1)
@@ -7366,7 +7365,7 @@
 			(uuid "f31db83f-bc08-4933-ba27-034a698075c6")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR06")
 					(unit 1)
@@ -7444,7 +7443,7 @@
 			(uuid "b02eac92-7141-448d-b75f-492e1829a68d")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR04")
 					(unit 1)
@@ -7522,7 +7521,7 @@
 			(uuid "9b6df23f-695f-4e15-aee9-cb5363bca318")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR013")
 					(unit 1)
@@ -7602,7 +7601,7 @@
 			(uuid "cd6cba09-d558-4e1f-b9f9-dcec06851f8c")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C4")
 					(unit 1)
@@ -7727,7 +7726,7 @@
 			(uuid "cd57ceeb-a91f-435c-8590-19c33484fa8e")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "U1")
 					(unit 1)
@@ -7803,7 +7802,7 @@
 			)
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "H1")
 					(unit 1)
@@ -7881,7 +7880,7 @@
 			(uuid "b4591e50-62c5-49a8-b85f-8b3ce1a09e47")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR03")
 					(unit 1)
@@ -7959,7 +7958,7 @@
 			(uuid "2efed2c9-1466-44d3-b07a-e4eedcf038fa")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#FLG02")
 					(unit 1)
@@ -8039,7 +8038,7 @@
 			(uuid "085e6331-f900-4898-8fab-cb7840748dcc")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "C5")
 					(unit 1)
@@ -8117,7 +8116,7 @@
 			(uuid "f0a6ca29-573f-46c6-985a-d7e5b096ed68")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR01")
 					(unit 1)
@@ -8135,7 +8134,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "d7c9929c-317e-40db-a62f-8b3dffefe4f2")
 		(property "Reference" "J5"
 			(at 52.07 95.25 0)
@@ -8148,7 +8146,7 @@
 			)
 		)
 		(property "Value" "Conn_02x02_Top_Bottom"
-			(at 52.07 97.79 0)
+			(at 53.086 98.298 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8203,7 +8201,7 @@
 			(uuid "7236a453-fa50-40cb-9d8f-10eea94e132c")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J5")
 					(unit 1)
@@ -8285,7 +8283,7 @@
 			(uuid "da721ce8-1170-4a88-9872-6693ea5d57ed")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "R1")
 					(unit 1)
@@ -8400,7 +8398,7 @@
 			(uuid "1943f4f0-9087-46c8-bcfd-fc76efc1561f")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "J6")
 					(unit 1)
@@ -8482,7 +8480,7 @@
 			(uuid "0a3f10a0-c021-423f-b21e-85fcc52f335a")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "R2")
 					(unit 1)
@@ -8592,7 +8590,7 @@
 			(uuid "2b914155-9c80-48a8-9aa7-a143b6a16516")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "Q1")
 					(unit 1)
@@ -8669,7 +8667,7 @@
 			(uuid "c8f18a76-1277-491c-bb8e-9c6992f130b6")
 		)
 		(instances
-			(project "tnc"
+			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
 					(reference "#PWR08")
 					(unit 1)

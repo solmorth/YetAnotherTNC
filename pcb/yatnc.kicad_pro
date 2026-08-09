@@ -472,7 +472,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "tnc.kicad_pro",
+    "filename": "yatnc.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -627,18 +627,18 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "tnc.kicad_sch",
-        "name": "Główny",
+        "filename": "yatnc.kicad_sch",
+        "name": "yatnc",
         "uuid": "ecaaff79-8f5d-458f-ab26-5f58c6334066"
       }
     ],
-    "used_designators": "H1-4,#FLG1-3,#PWR2,#PWR5,#PWR7-8,U2",
+    "used_designators": "",
     "variants": []
   },
   "sheets": [
     [
       "ecaaff79-8f5d-458f-ab26-5f58c6334066",
-      "Główny"
+      "yatnc"
     ]
   ],
   "text_variables": {},
