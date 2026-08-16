@@ -582,14 +582,38 @@
           "label": "Datasheet",
           "name": "Datasheet",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Opis",
+          "name": "Description",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "#",
+          "name": "${ITEM_NUMBER}",
+          "show": false
         }
       ],
       "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
-      "name": "Default Editing",
+      "name": "",
       "sort_asc": true,
-      "sort_field": "Oznaczenie"
+      "sort_field": "Reference"
     },
     "bus_aliases": {},
     "connection_grid_size": 50.0,
@@ -632,7 +656,7 @@
         "uuid": "ecaaff79-8f5d-458f-ab26-5f58c6334066"
       }
     ],
-    "used_designators": "C10-11,#PWR16,L1,D3-4",
+    "used_designators": "C1-11,#PWR1-13,#PWR16,L1,D1-4,J1-6,R1-7,#FLG1-2,H1-4,Q1,SW1,U1",
     "variants": []
   },
   "sheets": [
