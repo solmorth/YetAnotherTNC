@@ -4353,8 +4353,8 @@
 		(uuid "b6f09cc3-cf86-49a0-a4ac-78620bae5035")
 	)
 	(rectangle
-		(start 194.31 148.59)
-		(end 151.13 115.57)
+		(start 195.58 165.1)
+		(end 152.4 132.08)
 		(stroke
 			(width 0)
 			(type default)
@@ -4375,6 +4375,18 @@
 			(type none)
 		)
 		(uuid "e5b8a8d8-0821-482f-b1e8-7d6289acb079")
+	)
+	(rectangle
+		(start 22.86 177.8)
+		(end 57.15 196.85)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(fill
+			(type none)
+		)
+		(uuid "fff4b782-09d7-488d-aa38-c72bd70c2fbc")
 	)
 	(text "Operation mode selector"
 		(exclude_from_sim no)
@@ -4398,13 +4410,23 @@
 	)
 	(text "Bias & filter"
 		(exclude_from_sim no)
-		(at 157.734 147.066 0)
+		(at 159.004 163.576 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
 		(uuid "4f961da0-bd6f-41e7-9c26-b876423e2d31")
+	)
+	(text "Power indicator"
+		(exclude_from_sim no)
+		(at 33.02 195.072 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "58950227-29a6-486a-b899-ac37197e72a7")
 	)
 	(text "JST to mini din 10 PIN"
 		(exclude_from_sim no)
@@ -4481,16 +4503,28 @@
 		(uuid "623f4a76-c970-4354-92ad-2b0e81499c60")
 	)
 	(junction
+		(at 114.3 153.67)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "74b0238b-ca60-4cb8-938f-ecdd12eef783")
+	)
+	(junction
 		(at 162.56 85.09)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7c873a30-8d41-4287-9890-750d34baed8a")
 	)
 	(junction
-		(at 114.3 153.67)
+		(at 93.98 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "a117f05a-ec79-47bb-9e95-39ae1fdee533")
+		(uuid "7f603f67-1f13-4267-8615-81be5f56c39e")
+	)
+	(junction
+		(at 114.3 161.29)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a4fd64b3-a0c4-4735-b0d2-59da224cac00")
 	)
 	(junction
 		(at 213.36 62.23)
@@ -4535,16 +4569,10 @@
 		(uuid "d0d7e6d8-9049-4845-b95a-936aea822603")
 	)
 	(junction
-		(at 170.18 130.81)
+		(at 171.45 147.32)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "dbedbd77-743c-45e8-97bc-164c6d5c99a2")
-	)
-	(junction
-		(at 114.3 161.29)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "eab5ea28-18a7-42d2-b573-32fb81b8c30c")
 	)
 	(no_connect
 		(at 139.7 77.47)
@@ -4658,7 +4686,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 161.29) (xy 110.49 161.29)
+			(xy 110.49 161.29) (xy 114.3 161.29)
 		)
 		(stroke
 			(width 0)
@@ -4848,7 +4876,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 144.78) (xy 170.18 140.97)
+			(xy 171.45 161.29) (xy 171.45 157.48)
 		)
 		(stroke
 			(width 0)
@@ -4868,7 +4896,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 130.81) (xy 146.05 130.81)
+			(xy 171.45 147.32) (xy 147.32 147.32)
 		)
 		(stroke
 			(width 0)
@@ -4958,7 +4986,7 @@
 	)
 	(wire
 		(pts
-			(xy 139.7 90.17) (xy 146.05 90.17)
+			(xy 139.7 90.17) (xy 147.32 90.17)
 		)
 		(stroke
 			(width 0)
@@ -5038,16 +5066,6 @@
 	)
 	(wire
 		(pts
-			(xy 121.92 161.29) (xy 114.3 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "70cf5a01-eea6-4f17-91d5-7b6a97b129a1")
-	)
-	(wire
-		(pts
 			(xy 46.99 78.74) (xy 46.99 86.36)
 		)
 		(stroke
@@ -5078,17 +5096,7 @@
 	)
 	(wire
 		(pts
-			(xy 114.3 153.67) (xy 127 153.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "740871b7-42d2-497b-9159-79aea0117260")
-	)
-	(wire
-		(pts
-			(xy 170.18 130.81) (xy 170.18 129.54)
+			(xy 171.45 147.32) (xy 171.45 146.05)
 		)
 		(stroke
 			(width 0)
@@ -5145,6 +5153,16 @@
 			(type default)
 		)
 		(uuid "8a8f1cdf-054b-403f-8806-23c457a04afc")
+	)
+	(wire
+		(pts
+			(xy 83.82 81.28) (xy 93.98 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "976b35e2-fe6b-4b98-bc8a-9843c1419cca")
 	)
 	(wire
 		(pts
@@ -5228,7 +5246,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 133.35) (xy 170.18 130.81)
+			(xy 171.45 149.86) (xy 171.45 147.32)
 		)
 		(stroke
 			(width 0)
@@ -5338,7 +5356,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 90.17) (xy 146.05 130.81)
+			(xy 147.32 90.17) (xy 147.32 147.32)
 		)
 		(stroke
 			(width 0)
@@ -5368,6 +5386,16 @@
 	)
 	(wire
 		(pts
+			(xy 114.3 153.67) (xy 127 153.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cd7cf334-ddcd-46e7-88c4-6f68fc317146")
+	)
+	(wire
+		(pts
 			(xy 93.98 91.44) (xy 105.41 91.44)
 		)
 		(stroke
@@ -5375,6 +5403,16 @@
 			(type default)
 		)
 		(uuid "cf379a7a-8a13-4ffe-bb9c-a5205d3660d1")
+	)
+	(wire
+		(pts
+			(xy 114.3 161.29) (xy 121.92 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d567137f-c981-4847-81eb-ba7935e8e12f")
 	)
 	(wire
 		(pts
@@ -7864,7 +7902,7 @@
 	)
 	(global_label "3.3V"
 		(shape input)
-		(at 170.18 144.78 180)
+		(at 171.45 161.29 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -7874,7 +7912,7 @@
 		)
 		(uuid "02d735ee-f97e-43ee-b8da-d50309d2c39a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 163.0824 144.78 0)
+			(at 164.3524 161.29 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8054,6 +8092,30 @@
 			)
 		)
 	)
+	(global_label "3.3V"
+		(shape input)
+		(at 35.56 186.69 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "7d6fcf20-05b2-41d5-aed3-0e2c97444b27")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 28.4624 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
 	(global_label "TNC"
 		(shape input)
 		(at 105.41 83.82 180)
@@ -8200,7 +8262,7 @@
 	)
 	(global_label "AUDIO IN"
 		(shape input)
-		(at 177.8 130.81 0)
+		(at 179.07 147.32 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -8210,7 +8272,7 @@
 		)
 		(uuid "c30bd8b2-b7c4-4c9b-8ae5-a94e54b01fda")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 189.3125 130.81 0)
+			(at 190.5825 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8343,6 +8405,86 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 39.37 186.69 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "09f6f488-11db-452b-94ac-84c805657b7e")
+		(property "Reference" "R1"
+			(at 39.37 180.34 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 39.37 182.88 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
+			(at 39.37 188.468 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 39.37 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 39.37 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "1d120491-3072-4244-86a4-fd6e9f0d8b87")
+		)
+		(pin "1"
+			(uuid "1f235aff-f30c-40d4-b61c-db6687ff21c3")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "R1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Connector:Conn_01x13_Socket")
 		(at 134.62 87.63 180)
 		(unit 1)
@@ -8353,7 +8495,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0d445c05-326c-409f-9ee3-9dd9d215ff70")
-		(property "Reference" "J7"
+		(property "Reference" "J6"
 			(at 135.255 67.31 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8448,7 +8590,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "J7")
+					(reference "J6")
 					(unit 1)
 				)
 			)
@@ -8466,7 +8608,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0d597636-3752-4ba0-b2c3-8bbb5bc6a94a")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR015"
 			(at 241.3 24.13 0)
 			(hide yes)
 			(show_name no)
@@ -8526,7 +8668,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR010")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -8543,7 +8685,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0e9e0df4-f190-4f46-9915-76ae864c30bb")
-		(property "Reference" "#FLG01"
+		(property "Reference" "#FLG02"
 			(at 247.65 88.265 0)
 			(hide yes)
 			(show_name no)
@@ -8603,7 +8745,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#FLG01")
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)
@@ -8620,7 +8762,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "116118d2-1415-4328-9b1f-e6a4419b921e")
-		(property "Reference" "C6"
+		(property "Reference" "C12"
 			(at 262.89 34.2899 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8684,7 +8826,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C6")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -8783,7 +8925,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "18bb4679-2da8-4732-95d6-5aa65fb402e2")
-		(property "Reference" "R3"
+		(property "Reference" "R7"
 			(at 171.45 102.87 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8845,7 +8987,85 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R3")
+					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 83.82 81.28 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1a7e4f19-8940-4ece-9314-7fb058919271")
+		(property "Reference" "#PWR05"
+			(at 83.82 87.63 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 83.82 86.36 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 83.82 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 83.82 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 83.82 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c181d7d9-54a3-4cdf-8fb4-5adf16a69934")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -8863,7 +9083,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "22d51c96-1757-427a-8d4d-3b548780f528")
-		(property "Reference" "D1"
+		(property "Reference" "D4"
 			(at 180.6575 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8936,7 +9156,85 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "D1")
+					(reference "D4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 50.8 186.69 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2a6df863-547f-4e21-a71b-45a12f47c9a8")
+		(property "Reference" "#PWR04"
+			(at 50.8 193.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 50.8 191.77 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 50.8 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 50.8 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 50.8 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b6af680e-61d0-4531-abab-59a219418815")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -8953,7 +9251,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2bc9e903-9385-479e-b892-2605683308b1")
-		(property "Reference" "C3"
+		(property "Reference" "C9"
 			(at 237.236 12.954 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9015,7 +9313,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C3")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -9109,7 +9407,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3725b98b-6f5d-46c8-a496-c1151d794312")
-		(property "Reference" "D2"
+		(property "Reference" "D5"
 			(at 184.15 80.0099 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9195,7 +9493,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "D2")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -9213,7 +9511,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3fbf44e6-9be0-4238-b2ad-807ad98d1467")
-		(property "Reference" "J1"
+		(property "Reference" "J2"
 			(at 31.115 53.34 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9299,7 +9597,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "J1")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -9317,7 +9615,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4122ba57-633d-4bf3-99c7-cddb5b4b2088")
-		(property "Reference" "H2"
+		(property "Reference" "H1"
 			(at 163.83 19.0499 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9375,7 +9673,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "H2")
+					(reference "H1")
 					(unit 1)
 				)
 			)
@@ -9393,7 +9691,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4421f349-d17f-43d0-bb62-ace91da5d0d5")
-		(property "Reference" "R4"
+		(property "Reference" "R5"
 			(at 156.21 78.74 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9455,7 +9753,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R4")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -9473,7 +9771,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "44ff1ca8-f6b6-4114-a8b1-642ed6854ac3")
-		(property "Reference" "J4"
+		(property "Reference" "J1"
 			(at 29.845 21.59 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9538,7 +9836,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "J4")
+					(reference "J1")
 					(unit 1)
 				)
 			)
@@ -9555,7 +9853,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4c38c97f-ca6c-4ea9-8bf4-8f729db8781d")
-		(property "Reference" "R7"
+		(property "Reference" "R3"
 			(at 91.948 29.464 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9617,7 +9915,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R7")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -9635,7 +9933,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4dd8ef3d-f643-4105-b67d-548755cfdd87")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR07"
 			(at 102.87 107.95 0)
 			(hide yes)
 			(show_name no)
@@ -9695,7 +9993,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR016")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
@@ -9712,7 +10010,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "56bcb1f0-6246-4762-8f26-535543996ed3")
-		(property "Reference" "#FLG03"
+		(property "Reference" "#FLG01"
 			(at 68.58 164.465 0)
 			(hide yes)
 			(show_name no)
@@ -9773,7 +10071,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#FLG03")
+					(reference "#FLG01")
 					(unit 1)
 				)
 			)
@@ -9870,7 +10168,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "59bc2490-ad6d-442e-9511-39e099966ffa")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR014"
 			(at 231.14 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9930,7 +10228,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR09")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -10023,7 +10321,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5f839bdf-ccdb-4640-baae-533c5f67533c")
-		(property "Reference" "C11"
+		(property "Reference" "C2"
 			(at 81.28 155.448 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10087,7 +10385,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C11")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -10104,7 +10402,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "61ebbac7-3fed-4856-9207-c441f10ff7fc")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR09"
 			(at 127 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -10164,7 +10462,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR014")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -10182,7 +10480,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "644a12de-16bb-4960-bff0-b25bb0882cb5")
-		(property "Reference" "R8"
+		(property "Reference" "R2"
 			(at 63.5 154.94 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10244,7 +10542,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R8")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -10262,7 +10560,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "667e3723-e268-4ade-8cd1-a2d2cb98957b")
-		(property "Reference" "C2"
+		(property "Reference" "C8"
 			(at 212.09 34.2899 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10326,7 +10624,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C2")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -10334,7 +10632,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 173.99 130.81 270)
+		(at 93.98 85.09 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10342,30 +10640,31 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7120c8b3-9fe1-4e3f-bdf4-483a04c98577")
-		(property "Reference" "C1"
-			(at 173.99 138.43 90)
+		(uuid "6bd88e56-7155-4be3-b9fa-73797b716f64")
+		(property "Reference" "C4"
+			(at 92.71 83.058 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Value" "100nF"
-			(at 173.99 135.89 90)
+			(at 92.202 90.678 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 170.18 131.7752 0)
+			(at 94.9452 88.9 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10376,7 +10675,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 173.99 130.81 0)
+			(at 93.98 85.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10387,7 +10686,87 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 173.99 130.81 0)
+			(at 93.98 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "3389878b-66f3-4da5-bbc5-29e10adb7441")
+		)
+		(pin "1"
+			(uuid "95092971-e727-43ba-8ddb-7b8d88dd55a9")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 175.26 147.32 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7120c8b3-9fe1-4e3f-bdf4-483a04c98577")
+		(property "Reference" "C7"
+			(at 175.26 154.94 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100nF"
+			(at 175.26 152.4 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
+			(at 171.45 148.2852 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 175.26 147.32 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 175.26 147.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10406,7 +10785,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C1")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -10424,7 +10803,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "764a7bec-29d1-4d94-965a-77b7554722f1")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR012"
 			(at 171.45 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -10484,7 +10863,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR07")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -10502,7 +10881,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7ed8bccc-4909-467f-827b-dac9fcb521c9")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR016"
 			(at 261.62 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -10562,7 +10941,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR012")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -10580,7 +10959,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8c09ded2-3b38-4043-835c-f3d64deddf48")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR011"
 			(at 152.4 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -10640,7 +11019,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR06")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -10658,7 +11037,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9160dbae-ed4d-4376-b568-4cd5c9ffae88")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR01"
 			(at 46.99 35.56 0)
 			(hide yes)
 			(show_name no)
@@ -10718,7 +11097,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR04")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -10736,7 +11115,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "92bb3392-b6ca-489f-8afa-c601af9c2cad")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR06"
 			(at 93.98 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -10796,7 +11175,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR013")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -10814,7 +11193,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "97354515-2a50-45be-b8fe-340f1812a3de")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR08"
 			(at 114.3 30.48 0)
 			(hide yes)
 			(show_name no)
@@ -10874,7 +11253,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR015")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -10891,7 +11270,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a1addc44-80f0-43dc-b776-78fc29b277f3")
-		(property "Reference" "C4"
+		(property "Reference" "C10"
 			(at 257.81 36.83 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10953,7 +11332,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C4")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -11086,7 +11465,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 170.18 121.92 180)
+		(at 171.45 138.43 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11095,8 +11474,8 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a4cb1389-f032-4d00-b48c-867eb7c9b318")
-		(property "Reference" "#PWR08"
-			(at 170.18 115.57 0)
+		(property "Reference" "#PWR013"
+			(at 171.45 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11107,7 +11486,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 168.656 119.126 0)
+			(at 169.926 135.636 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11118,7 +11497,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 170.18 121.92 0)
+			(at 171.45 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11129,7 +11508,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 170.18 121.92 0)
+			(at 171.45 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11140,7 +11519,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 170.18 121.92 0)
+			(at 171.45 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11156,7 +11535,98 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR08")
+					(reference "#PWR013")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED")
+		(at 46.99 186.69 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a979b966-f69c-4a82-8e65-7d747efc70c8")
+		(property "Reference" "D1"
+			(at 48.5775 179.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LED"
+			(at 48.5775 181.61 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_THT:LED_D5.0mm"
+			(at 46.99 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 46.99 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Light emitting diode"
+			(at 46.99 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Sim.Pins" "1=K 2=A"
+			(at 46.99 186.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "7d9e9644-7f7f-419a-b534-0e9d0695a2ac")
+		)
+		(pin "2"
+			(uuid "0c20a3ac-12ce-4132-9aad-5c09132fd31a")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -11174,7 +11644,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aeeb274e-87de-4cba-9620-f81c67c0e99a")
-		(property "Reference" "D3"
+		(property "Reference" "D2"
 			(at 56.1975 154.94 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11236,7 +11706,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "D3")
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -11253,7 +11723,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b1ebc176-de6e-4e60-aa84-a565d7ed51f8")
-		(property "Reference" "D4"
+		(property "Reference" "D3"
 			(at 70.866 155.194 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11317,7 +11787,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "D4")
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -11334,7 +11804,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b4ab87ed-12fb-4455-989a-9812e7d71c76")
-		(property "Reference" "R6"
+		(property "Reference" "R4"
 			(at 104.902 29.464 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11396,7 +11866,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R6")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -11414,7 +11884,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b70ac6d1-1f03-4458-b043-fe6be0904fab")
-		(property "Reference" "H1"
+		(property "Reference" "H2"
 			(at 163.83 25.3999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11472,7 +11942,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "H1")
+					(reference "H2")
 					(unit 1)
 				)
 			)
@@ -11490,7 +11960,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b956f4cc-a48b-45a8-bbc2-0b2dd9920dd5")
-		(property "Reference" "#PWR03"
+		(property "Reference" "#PWR02"
 			(at 46.99 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -11550,7 +12020,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR03")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -11567,7 +12037,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bdf8b6b9-fb2a-4a94-86df-d6ac2ebbdbfd")
-		(property "Reference" "R5"
+		(property "Reference" "R6"
 			(at 155.702 88.392 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11629,7 +12099,88 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R5")
+					(reference "R6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 114.3 157.48 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "be978366-a62a-4832-a604-7b45a3ebbbf7")
+		(property "Reference" "C6"
+			(at 116.332 155.194 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "470µF"
+			(at 117.602 163.068 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm"
+			(at 113.3348 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 114.3 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 114.3 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "8ee5a9a2-c929-4ad3-b86a-20e3f0df2ac2")
+		)
+		(pin "1"
+			(uuid "f2fd2e29-b548-4714-871b-53cd393c2657")
+		)
+		(instances
+			(project "yatnc"
+				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -11646,7 +12197,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c21c40bb-eed8-4175-bb66-c1b04d6cff19")
-		(property "Reference" "C5"
+		(property "Reference" "C11"
 			(at 257.81 44.45 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11708,7 +12259,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C5")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -11725,7 +12276,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d1a4c50a-2182-4f94-af18-bc5962fe342f")
-		(property "Reference" "C8"
+		(property "Reference" "C3"
 			(at 87.122 25.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11789,7 +12340,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C8")
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -11807,7 +12358,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d1c34f80-d7d6-48ab-810f-9e9d071834e1")
-		(property "Reference" "#PWR01"
+		(property "Reference" "#PWR03"
 			(at 46.99 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -11867,7 +12418,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR01")
+					(reference "#PWR03")
 					(unit 1)
 				)
 			)
@@ -11884,7 +12435,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d7c9929c-317e-40db-a62f-8b3dffefe4f2")
-		(property "Reference" "J5"
+		(property "Reference" "J4"
 			(at 104.14 152.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11952,7 +12503,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "J5")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -11960,7 +12511,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 170.18 137.16 180)
+		(at 171.45 153.67 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -11970,8 +12521,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e0b97278-49b4-4c7e-b120-e55cd0d4ad09")
-		(property "Reference" "R1"
-			(at 167.64 138.4301 0)
+		(property "Reference" "R9"
+			(at 168.91 154.9401 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11982,7 +12533,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 167.64 135.8901 0)
+			(at 168.91 152.4001 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -11993,7 +12544,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-			(at 171.958 137.16 90)
+			(at 173.228 153.67 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12004,7 +12555,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 170.18 137.16 0)
+			(at 171.45 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12015,7 +12566,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 170.18 137.16 0)
+			(at 171.45 153.67 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12034,7 +12585,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R1")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -12052,7 +12603,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e3db2784-6227-4bb1-b5bc-916e9f7918c8")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR010"
 			(at 143.51 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -12112,7 +12663,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "#PWR011")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -12130,7 +12681,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e4724cd0-723e-401a-848d-0c19277eaed6")
-		(property "Reference" "J6"
+		(property "Reference" "J5"
 			(at 111.76 85.0899 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12227,7 +12778,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "J6")
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -12235,7 +12786,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 170.18 125.73 180)
+		(at 171.45 142.24 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -12245,8 +12796,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e5796a45-b1b8-43a1-a1aa-869cdd4e7b83")
-		(property "Reference" "R2"
-			(at 167.64 127.0001 0)
+		(property "Reference" "R8"
+			(at 168.91 143.5101 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12257,7 +12808,7 @@
 			)
 		)
 		(property "Value" "10k"
-			(at 167.64 124.4601 0)
+			(at 168.91 140.9701 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12268,7 +12819,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal"
-			(at 171.958 125.73 90)
+			(at 173.228 142.24 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12279,7 +12830,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 170.18 125.73 0)
+			(at 171.45 142.24 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12290,7 +12841,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 170.18 125.73 0)
+			(at 171.45 142.24 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12309,88 +12860,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "R2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 114.3 157.48 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "eb4a0ff6-3e1f-4f0f-87bd-5eca8391be3c")
-		(property "Reference" "C7"
-			(at 117.602 156.464 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "100nF"
-			(at 117.094 158.242 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P5.00mm"
-			(at 113.3348 153.67 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 114.3 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 114.3 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c6dfef63-4e94-4990-9584-3a8875113b6b")
-		)
-		(pin "2"
-			(uuid "443166d2-9843-43e5-87e6-36d47f70e9b7")
-		)
-		(instances
-			(project "yatnc"
-				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C7")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -12407,7 +12877,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ed1f2485-6530-4ebe-90e6-d24240a92e2c")
-		(property "Reference" "C9"
+		(property "Reference" "C5"
 			(at 101.092 25.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12471,7 +12941,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C9")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -12511,7 +12981,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline"
+		(property "Footprint" "Package_TO_SOT_THT:TO-92_Inline_Wide"
 			(at 173.99 80.645 0)
 			(hide yes)
 			(show_name no)
@@ -12598,7 +13068,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f53ed0f9-775b-45da-87f3-316dcbe9f6de")
-		(property "Reference" "C10"
+		(property "Reference" "C1"
 			(at 78.232 155.194 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12662,7 +13132,7 @@
 		(instances
 			(project "yatnc"
 				(path "/ecaaff79-8f5d-458f-ab26-5f58c6334066"
-					(reference "C10")
+					(reference "C1")
 					(unit 1)
 				)
 			)
