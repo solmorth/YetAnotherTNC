@@ -80,11 +80,8 @@ Testing/
 
 *.pro.user
 *.kicad_user_sys
-
-/gerber/
-/*.gbr
-/*.drl
-/*.pdf
+!gerber/
+!gerber/**
 .history/
 yatnc-backups/
 _autosave-*
