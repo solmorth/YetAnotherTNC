@@ -1,4 +1,4 @@
-# lsn_tnc
+# YetAnotherTNC
 
 Zephyr firmware (and, eventually, a companion PCB) for a nRF52840 Pro Micro
 board that turns a phone's Bluetooth connection into a packet radio TNC.
