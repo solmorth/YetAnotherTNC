@@ -86,3 +86,7 @@ Testing/
 yatnc-backups/
 _autosave-*
 *.lck
+
+.venv/
+Zephyr/
+.host_test_build

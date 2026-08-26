@@ -1,0 +1,71 @@
+#include <zephyr/dt-bindings/pinctrl/nrf-pinctrl.h>
+#include <zephyr/dt-bindings/adc/nrf-saadc.h>
+
+/ {
+	chosen {
+		zephyr,nus-uart = &uart0;
+	};
+
+	zephyr,user {
+		io-channels = <&adc 7>; /* AIN7 = P0.31 */
+	};
+
+	mode_select {
+		compatible = "gpio-keys";
+		mode_pin: mode_pin {
+			gpios = <&gpio0 2 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Mode Selection Pin";
+		};
+		digi_pin: digi_pin {
+			gpios = <&gpio0 29 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Digipeater Selection Pin";
+		};
+	};
+
+	ptt_control {
+		compatible = "gpio-keys";
+		ptt_pin: ptt_pin {
+			gpios = <&gpio0 22 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+			label = "PTT Control Pin";
+		};
+	};
+
+};
+
+&uart0 {
+	current-speed = <9600>;
+};
+
+&adc {
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	channel@7 {
+		reg = <7>;
+		zephyr,gain = "ADC_GAIN_1_6";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+		zephyr,input-positive = <NRF_SAADC_AIN7>;
+	};
+};
+
+/*
+ * TX Audio (Pin 20) is driven by the nRF52840's hardware PWM peripheral
+ * instead of bit-banged GPIO: channel 1 is added alongside the board's
+ * existing channel 0 (onboard LED, unused by this app) so PWM0 now also
+ * routes to P0.20. The peripheral free-runs the carrier in hardware; the
+ * app only updates the duty cycle once per audio sample.
+ */
+&pwm0_default {
+	group2 {
+		psels = <NRF_PSEL(PWM_OUT1, 0, 20)>;
+	};
+};
+
+&pwm0_sleep {
+	group2 {
+		psels = <NRF_PSEL(PWM_OUT1, 0, 20)>;
+		low-power-enable;
+	};
+};
