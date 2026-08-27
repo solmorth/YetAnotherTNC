@@ -37,7 +37,7 @@
 	gps_control {
 		compatible = "gpio-keys";
 		gps_enable_pin: gps_enable_pin {
-			gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio1 4 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
 			label = "GPS Enable Pin";
 		};
 	};
