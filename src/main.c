@@ -24,6 +24,7 @@
 
 #include "mode_select.h"
 #include "ptt.h"
+#include "gps.h"
 #include "tnc.h"
 #include "ax25.h"
 #include "fx25.h"
@@ -352,6 +353,7 @@ int main(void)
 
 	mode_select_init();
 	ptt_init();
+	gps_init();
 	tnc_init();
 	fx25_init();
 	printk("FX.25 FEC Engine Initialized (RS(255,239), Tag_01 0x%016llX)\n",
