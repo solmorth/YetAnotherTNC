@@ -353,7 +353,12 @@ int main(void)
 
 	mode_select_init();
 	ptt_init();
-	gps_init();
+
+	if (mode_select_get_current() == APP_MODE_STANDALONE) {
+		gps_init();
+		gps_enable_set(true);
+	}
+
 	tnc_init();
 	fx25_init();
 	printk("FX.25 FEC Engine Initialized (RS(255,239), Tag_01 0x%016llX)\n",

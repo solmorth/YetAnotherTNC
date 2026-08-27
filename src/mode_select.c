@@ -5,6 +5,7 @@
 
 #define MODE_PIN_NODE DT_NODELABEL(mode_pin)
 #define DIGI_PIN_NODE DT_NODELABEL(digi_pin)
+#define STANDALONE_PIN_NODE DT_NODELABEL(standalone_pin)
 
 #if DT_NODE_EXISTS(MODE_PIN_NODE)
 static const struct gpio_dt_spec mode_spec = GPIO_DT_SPEC_GET(MODE_PIN_NODE, gpios);
@@ -12,6 +13,10 @@ static const struct gpio_dt_spec mode_spec = GPIO_DT_SPEC_GET(MODE_PIN_NODE, gpi
 
 #if DT_NODE_EXISTS(DIGI_PIN_NODE)
 static const struct gpio_dt_spec digi_spec = GPIO_DT_SPEC_GET(DIGI_PIN_NODE, gpios);
+#endif
+
+#if DT_NODE_EXISTS(STANDALONE_PIN_NODE)
+static const struct gpio_dt_spec standalone_spec = GPIO_DT_SPEC_GET(STANDALONE_PIN_NODE, gpios);
 #endif
 
 static app_mode_t current_mode = APP_MODE_BRIDGE;
@@ -41,6 +46,16 @@ int mode_select_init(void)
 	}
 #endif
 
+#if DT_NODE_EXISTS(STANDALONE_PIN_NODE)
+	if (gpio_is_ready_dt(&standalone_spec)) {
+		err = gpio_pin_configure_dt(&standalone_spec, GPIO_INPUT);
+		if (err < 0) {
+			printk("Failed to configure standalone pin: %d\n", err);
+			ret = err;
+		}
+	}
+#endif
+
 #if DT_NODE_EXISTS(MODE_PIN_NODE)
 	if (gpio_is_ready_dt(&mode_spec)) {
 		printk("Mode Pin (Pin %d) logical state: %d\n", mode_spec.pin, gpio_pin_get_dt(&mode_spec));
@@ -50,6 +65,13 @@ int mode_select_init(void)
 #if DT_NODE_EXISTS(DIGI_PIN_NODE)
 	if (gpio_is_ready_dt(&digi_spec)) {
 		printk("Digi Pin (Pin %d) logical state: %d\n", digi_spec.pin, gpio_pin_get_dt(&digi_spec));
+	}
+#endif
+
+#if DT_NODE_EXISTS(STANDALONE_PIN_NODE)
+	if (gpio_is_ready_dt(&standalone_spec)) {
+		printk("Standalone Pin (Pin %d) logical state: %d\n", standalone_spec.pin,
+		       gpio_pin_get_dt(&standalone_spec));
 	}
 #endif
 
@@ -63,6 +85,7 @@ app_mode_t mode_select_get_current(void)
 {
 	bool mode_active = false;
 	bool digi_active = false;
+	bool standalone_active = false;
 
 #if DT_NODE_EXISTS(MODE_PIN_NODE)
 	if (gpio_is_ready_dt(&mode_spec)) {
@@ -76,7 +99,15 @@ app_mode_t mode_select_get_current(void)
 	}
 #endif
 
-	if (digi_active) {
+#if DT_NODE_EXISTS(STANDALONE_PIN_NODE)
+	if (gpio_is_ready_dt(&standalone_spec)) {
+		standalone_active = (gpio_pin_get_dt(&standalone_spec) > 0);
+	}
+#endif
+
+	if (standalone_active) {
+		return APP_MODE_STANDALONE;
+	} else if (digi_active) {
 		return APP_MODE_DIGIPEATER;
 	} else if (mode_active) {
 		return APP_MODE_PACKET_TNC;
@@ -94,6 +125,8 @@ const char *mode_select_get_name(app_mode_t mode)
 		return "PACKET_TNC (KISS / AX.25 Server)";
 	case APP_MODE_DIGIPEATER:
 		return "DIGIPEATER (AX.25 Repeater + BLE)";
+	case APP_MODE_STANDALONE:
+		return "STANDALONE (GPS)";
 	default:
 		return "UNKNOWN";
 	}

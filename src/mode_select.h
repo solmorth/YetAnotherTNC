@@ -8,6 +8,7 @@ typedef enum {
 	APP_MODE_BRIDGE = 0,       /* Default: Pin High (Unbridged) -> Transparent UART <-> BLE */
 	APP_MODE_PACKET_TNC = 1,   /* Pin Low (Grounded) -> AX.25 / KISS TNC Server */
 	APP_MODE_DIGIPEATER = 2,   /* Digi Pin Low (Grounded) -> AX.25 Digipeater */
+	APP_MODE_STANDALONE = 3,  /* Standalone Pin Low (Grounded) -> Standalone GPS mode */
 } app_mode_t;
 
 #ifdef __cplusplus
