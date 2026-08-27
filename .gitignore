@@ -88,5 +88,7 @@ _autosave-*
 *.lck
 
 .venv/
+zephyrproject/**
+.zephyr-sdk/
 Zephyr/
 .host_test_build

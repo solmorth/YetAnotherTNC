@@ -10,15 +10,6 @@ ZEPHYR_WORKSPACE="$SCRIPT_DIR/zephyrproject"
 export ZEPHYR_BASE="${ZEPHYR_BASE:-$ZEPHYR_WORKSPACE/zephyr}"
 rm $SCRIPT_DIR/build -r || true
 
-# Auto-detect Zephyr SDK if not explicitly set
-if [ -z "$ZEPHYR_SDK_INSTALL_DIR" ]; then
-    # Search for installed zephyr-sdk in common locations
-    DETECTED_SDK=$(ls -d "$HOME"/zephyr-sdk-* /opt/zephyr-sdk-* "$HOME"/.local/zephyr-sdk-* "$SCRIPT_DIR"/.zephyr-sdk 2>/dev/null | head -n 1 || true)
-    if [ -n "$DETECTED_SDK" ]; then
-        export ZEPHYR_SDK_INSTALL_DIR="$DETECTED_SDK"
-    fi
-fi
-
 # 1. Setup Virtual Environment
 if [ ! -d "$VENV_DIR" ]; then
     echo "[+] Creating virtual environment in $VENV_DIR..."
@@ -46,7 +37,47 @@ if [ -f "$ZEPHYR_BASE/scripts/requirements.txt" ]; then
     "$VENV_DIR/bin/pip" install -q -r "$ZEPHYR_BASE/scripts/requirements.txt"
 fi
 
-# 3. Determine Board & Run Build
+# 3. Setup Zephyr SDK if not present
+if [ -z "$ZEPHYR_SDK_INSTALL_DIR" ]; then
+    DETECTED_SDK=$(ls -d "$SCRIPT_DIR"/.zephyr-sdk "$HOME"/zephyr-sdk-* /opt/zephyr-sdk-* "$HOME"/.local/zephyr-sdk-* 2>/dev/null | head -n 1 || true)
+    if [ -n "$DETECTED_SDK" ] && [ -d "$DETECTED_SDK" ]; then
+        export ZEPHYR_SDK_INSTALL_DIR="$DETECTED_SDK"
+    else
+        SDK_DIR="$SCRIPT_DIR/.zephyr-sdk"
+        echo "[+] Zephyr SDK not found. Downloading SDK to $SDK_DIR..."
+
+        SDK_VERSION="$(cat "$ZEPHYR_BASE/SDK_VERSION" 2>/dev/null || echo "1.0.1")"
+        HOST_OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+        HOST_ARCH="$(uname -m)"
+        SDK_ARCH_STR="${HOST_OS}-${HOST_ARCH}"
+        SDK_TAR="zephyr-sdk-${SDK_VERSION}_${SDK_ARCH_STR}_minimal.tar.xz"
+        SDK_URL="https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${SDK_VERSION}/${SDK_TAR}"
+
+        TMP_DIR="$(mktemp -d)"
+        echo "[+] Downloading $SDK_URL..."
+        if command -v curl >/dev/null 2>&1; then
+            curl -fL "$SDK_URL" -o "$TMP_DIR/$SDK_TAR"
+        elif command -v wget >/dev/null 2>&1; then
+            wget -O "$TMP_DIR/$SDK_TAR" "$SDK_URL"
+        else
+            python3 -c "import urllib.request; urllib.request.urlretrieve('$SDK_URL', '$TMP_DIR/$SDK_TAR')"
+        fi
+
+        echo "[+] Extracting Zephyr SDK..."
+        mkdir -p "$SDK_DIR"
+        tar -xf "$TMP_DIR/$SDK_TAR" -C "$SDK_DIR" --strip-components=1
+        rm -rf "$TMP_DIR"
+
+        echo "[+] Setting up Zephyr SDK (toolchain: arm-zephyr-eabi)..."
+        (
+            cd "$SDK_DIR"
+            ./setup.sh -t arm-zephyr-eabi -h -c
+        )
+        export ZEPHYR_SDK_INSTALL_DIR="$SDK_DIR"
+    fi
+fi
+
+# 4. Determine Board & Run Build
 BOARD="${BOARD:-promicro_nrf52840}"
 
 if [ $# -eq 0 ]; then
