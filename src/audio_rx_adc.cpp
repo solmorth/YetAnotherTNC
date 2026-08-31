@@ -58,7 +58,8 @@ static void rx_audio_thread_entry(void *p1, void *p2, void *p3)
 
 	while (1) {
 		app_mode_t mode = mode_select_get_current();
-		if (mode == APP_MODE_PACKET_TNC || mode == APP_MODE_DIGIPEATER) {
+		if (mode == APP_MODE_PACKET_TNC || mode == APP_MODE_DIGIPEATER ||
+		    mode == APP_MODE_STANDALONE) {
 #if DT_NODE_EXISTS(RX_AUDIO_ADC_NODE)
 			if (adc_is_ready_dt(&rx_audio_adc) &&
 			    adc_sequence_init_dt(&rx_audio_adc, &sequence) == 0 &&
