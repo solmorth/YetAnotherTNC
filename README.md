@@ -19,6 +19,9 @@ KISS or TNC2 monitor lines can talk to it; see [Phone app](#phone-app) below.
 
 - [Why](#why)
 - [Hardware](#hardware)
+  - [Pinout](#pinout)
+  - [Transceiver connector (JST 10-pin)](#transceiver-connector-jst-10-pin)
+  - [Bill of Materials (BOM)](#bill-of-materials-bom)
 - [Operating modes](#operating-modes)
 - [Known limitations](#known-limitations)
 - [Phone app](#phone-app)
@@ -44,20 +47,68 @@ connector, same signals. Any other radio that can be driven by its
 mic/speaker/PTT lines can work too, via a custom audio interface cable
 (not covered by this repo — just the pins on the nRF52840 side).
 
-A PCB for this connector is planned but not yet in this repo (will land under
-`pcb/`); for now the board is hand-wired.
+PCB design files and bill of materials live under [`pcb/`](pcb/) (`yatnc.kicad_sch`, `yatnc.kicad_pcb`, `yatnc.csv`).
 
 Board: Pro Micro nRF52840 (or any nice!nano-bootloader-compatible clone,
 `promicro_nrf52840` in Zephyr).
 
+### Pinout
+
 | Pin | DT node | Function | Notes |
 |---|---|---|---|
-| 9, 10 (P0.09/P0.10) | `uart0` | Radio RS232 (APRS data) | Level-shifted through an onboard MAX3232. Primary use: the FTM510/FTM400's own built-in APRS packet decoder outputs RS232 here in BRIDGE mode. Also works with other serial-speaking radios/modems that expect a native protocol. Never touched by firmware for anything else. |
+| 9, 10 (P0.09/P0.10) | `uart0` | Radio RS232 (APRS data) | Level-shifted through an onboard MAX3232 to true RS-232 (±12V). Primary use: the FTM510/FTM400's own built-in APRS packet decoder outputs RS232 here in BRIDGE mode. Also works with other serial-speaking radios/modems that expect a native protocol. Never touched by firmware for anything else. |
 | 31 (P0.31) | `zephyr,user` io-channel | RX audio in | ADC (AIN7), sampled at 9600 Hz for the AFSK demodulator. |
 | 20 (P0.20) | `&pwm0_default` | TX audio out | Hardware PWM carrier, low-pass filtered externally into an analog tone. |
 | 22 (P0.22) | `ptt_pin` | PTT out | Active-high. |
 | 2 (P0.02) | `mode_pin` | Mode select | Pull-up, active-low. Grounded → PACKET_TNC. |
 | 29 (P0.29) | `digi_pin` | Digipeater select | Pull-up, active-low. Grounded → DIGIPEATER (overrides pin 2). |
+
+### Transceiver connector (JST 10-pin)
+
+> [!IMPORTANT]
+> - **RS-232 voltage levels (±12V)**: The serial lines on the 10-pin JST connector (`TO TRCV`) are true **RS-232 (±12V)** driven by the onboard MAX3232 transceiver, **not** 3.3V or 5V TTL. Do not connect them directly to logic-level UART pins!
+> - **RX / TX crossover**: The RS-232 RX and TX lines **must be crossed** between the board's 10-pin JST connector and the radio (Board TX &rarr; Radio RX, Board RX &rarr; Radio TX).
+
+| Pin | Net | Function / Description |
+|:---:|---|---|
+| 1 | `PKD` | TX Packet Audio (from PWM filter) |
+| 2 | `GND` | Ground |
+| 3 | `PTT` | PTT output |
+| 4 | NC | Unconnected |
+| 5 | `AUDIO TRCV` | RX Audio (to ADC demodulator) |
+| 6 | NC | Unconnected |
+| 7 | `RX` | RS-232 RX (±12V, connect to Radio TX — **crossed**) |
+| 8 | `TX` | RS-232 TX (±12V, connect to Radio RX — **crossed**) |
+| 9 | NC | Unconnected |
+| 10 | NC | Unconnected |
+
+### Bill of Materials (BOM)
+
+Generated from KiCad BOM ([`pcb/yatnc.csv`](pcb/yatnc.csv)):
+
+| Designator | Value / Part | Qty | Description |
+|---|---|:---:|---|
+| C1 | 270µF 35V | 1 | Polarized electrolytic capacitor |
+| C2, C4, C7, C8, C9, C10, C11, C12 | 100nF | 8 | Ceramic disc capacitor |
+| C3, C5 | 5.6nF | 2 | Ceramic disc capacitor |
+| C6 | 470µF 10V | 1 | Polarized electrolytic capacitor |
+| D1 | LPWR | 1 | Power indicator LED (5mm) |
+| D2 | 1N5822 | 1 | Schottky diode (3A, 40V) |
+| D3 | BZW04 18V | 1 | TVS transient voltage suppressor diode |
+| D4 | LPTT | 1 | PTT indicator LED (5mm) |
+| D5 | 1N4148 | 1 | High-speed switching diode |
+| IC1 | MAX3232CDR | 1 | 3.3V/5V RS-232 transceiver (SOIC-16) |
+| J1 | Conn_02x03_Top_Bottom | 1 | 2×3 pin header (2.54mm pitch) |
+| J4 | DFR0570 | 1 | DFRobot DFR0570 DC-DC buck converter module |
+| J5, J6 | Conn_01x13_Socket | 2 | 1×13 female socket headers (for Pro Micro nRF52840) |
+| J7 | Conn_01x04_Pin | 1 | JST-EH 4-pin vertical header (2.50mm pitch) |
+| PWR | Conn_01x02_Socket | 1 | JST-EH 2-pin vertical power connector (2.50mm pitch) |
+| Q1, Q2 | BC547 | 2 | NPN bipolar junction transistor (TO-92) |
+| R1, R3, R4, R5, R10 | 1k | 5 | Axial resistor 1kΩ (DIN0207) |
+| R2 | 1ohm | 1 | Axial resistor 1Ω (DIN0207) |
+| R6, R7, R8, R9 | 10k | 4 | Axial resistor 10kΩ (DIN0207) |
+| SW1 | RST | 1 | Tactile push button switch (6mm) |
+| TO TRCV | JST | 1 | JST-EH 10-pin vertical connector (to transceiver) |
 
 ## Operating modes
 
@@ -259,7 +310,7 @@ CMakeLists.txt  build target sources
 build.sh        one-shot Zephyr workspace + build
 run_tests.sh    host-side unit tests + coverage
 bootloader/     nice!nano UF2 bootloader images
-pcb/            board design files (planned, not yet added)
+pcb/            KiCad board design files and BOM (yatnc.kicad_sch, yatnc.kicad_pcb, yatnc.csv)
 ```
 
 Other tools in `tools/`:
