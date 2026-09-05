@@ -19,6 +19,7 @@ KISS or TNC2 monitor lines can talk to it; see [Phone app](#phone-app) below.
 
 - [Why](#why)
 - [Hardware](#hardware)
+  - [PCB](#pcb)
   - [Pinout](#pinout)
   - [Transceiver connector (JST 10-pin)](#transceiver-connector-jst-10-pin)
   - [Bill of Materials (BOM)](#bill-of-materials-bom)
@@ -47,10 +48,16 @@ connector, same signals. Any other radio that can be driven by its
 mic/speaker/PTT lines can work too, via a custom audio interface cable
 (not covered by this repo — just the pins on the nRF52840 side).
 
-PCB design files and bill of materials live under [`pcb/`](pcb/) (`yatnc.kicad_sch`, `yatnc.kicad_pcb`, `yatnc.csv`).
-
 Board: Pro Micro nRF52840 (or any nice!nano-bootloader-compatible clone,
 `promicro_nrf52840` in Zephyr).
+
+### PCB
+
+PCB design files and bill of materials live under [`pcb/`](pcb/) (`yatnc.kicad_sch`, `yatnc.kicad_pcb`, `yatnc.csv`).
+
+| PCB 3D Render | PCB Editor |
+|:---:|:---:|
+| ![PCB 3D Render](images/3d.png) | ![PCB Editor](images/pcb.png) |
 
 ### Pinout
 
@@ -311,6 +318,7 @@ build.sh        one-shot Zephyr workspace + build
 run_tests.sh    host-side unit tests + coverage
 bootloader/     nice!nano UF2 bootloader images
 pcb/            KiCad board design files and BOM (yatnc.kicad_sch, yatnc.kicad_pcb, yatnc.csv)
+images/         PCB 3D render and layout editor screenshots
 ```
 
 Other tools in `tools/`:
