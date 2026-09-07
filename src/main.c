@@ -29,6 +29,7 @@
 #include "ax25.h"
 #include "fx25.h"
 #include "kiss.h"
+#include "tnc_config.h"
 #include "audio_tx_pwm.hpp"
 #include "audio_rx_adc.hpp"
 #include "log_ts.h"
@@ -250,7 +251,7 @@ static void nus_received(struct bt_conn *conn, const void *data,
 		tnc_queue_tx_packet((const uint8_t *)data, len, mode);
 	} else {
 		printk("BLE -> TNC Engine (%s): %d bytes\n", mode_select_get_name(mode), len);
-		tnc_process_ble_bytes((const uint8_t *)data, len, mode, uart_dev);
+		tnc_process_ble_bytes((const uint8_t *)data, len, mode, uart_dev, ble_send_raw);
 	}
 }
 
@@ -352,6 +353,7 @@ int main(void)
 	printk("=== UART <-> BLE NUS Bridge & APRS TNC Server ===\n");
 
 	mode_select_init();
+	tnc_config_init();
 	ptt_init();
 
 	if (mode_select_get_current() == APP_MODE_STANDALONE) {

@@ -5,6 +5,7 @@
 #include <zephyr/sys/printk.h>
 #include <zephyr/drivers/uart.h>
 #include "log_ts.h"
+#include "tnc_config.h"
 
 static kiss_decoder_t ble_kiss_dec;
 static kiss_decoder_t radio_kiss_dec;
@@ -259,7 +260,8 @@ static void ble_flush_work_handler(struct k_work *work)
 	k_mutex_unlock(&ble_raw_lock);
 }
 
-void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, const struct device *uart_dev)
+void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, const struct device *uart_dev,
+			    ble_send_func_t ble_send)
 {
 	if (data == NULL || len == 0) {
 		return;
@@ -284,7 +286,6 @@ void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, con
 			 */
 			size_t payload_len = (size_t)ret;
 			printk("KISS Frame Recv from BLE: cmd 0x%02X, len %d\n", cmd, payload_len);
-			tnc_log_ax25_payload(payload, payload_len);
 
 			/* Any complete KISS frame (not just cmd DATA) has already
 			 * consumed these bytes - don't let the raw-accumulation
@@ -297,6 +298,7 @@ void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, con
 			kiss_frame_completed = true;
 
 			if (cmd == KISS_CMD_DATA) {
+				tnc_log_ax25_payload(payload, payload_len);
 				/* Standard KISS: the host does NOT send an FCS - the TNC's
 				 * modem computes it. tnc_queue_tx_packet()'s consumer
 				 * (audio_tx_pwm_play_packet -> AFSKModulator) computes and
@@ -305,6 +307,20 @@ void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, con
 				 * comment) - so the raw KISS payload goes in as-is.
 				 */
 				tnc_queue_tx_packet(payload, payload_len, mode);
+			} else if (cmd == KISS_CMD_SETHARDWARE) {
+				char resp[96];
+
+				tnc_config_handle_command(payload, payload_len, resp, sizeof(resp));
+				printk("[CFG] %.*s -> %s\n", (int)payload_len, payload, resp);
+
+				if (ble_send != NULL) {
+					uint8_t kiss_buf[128];
+					int kiss_len = kiss_encode_frame(KISS_CMD_SETHARDWARE, (const uint8_t *)resp,
+									  strlen(resp), kiss_buf, sizeof(kiss_buf));
+					if (kiss_len > 0) {
+						ble_send(kiss_buf, kiss_len);
+					}
+				}
 			}
 		}
 	}

@@ -9,6 +9,7 @@
 #include "ax25.h"
 #include "mode_select.h"
 #include "tnc.h"
+#include "tnc_config.h"
 #include "log_ts.h"
 
 #define GPS_ENABLE_PIN_NODE DT_NODELABEL(gps_enable_pin)
@@ -35,10 +36,11 @@ RING_BUF_DECLARE(gps_rx_ring_buf, GPS_RX_RING_BUF_SIZE);
 
 static bool gps_has_fix;
 
-/* Random test frame sent every 10s while a fix is held - stands in for a
- * real APRS position payload until the NMEA fields get wired into one.
+/* Random test frame sent at the configured beacon interval while a fix is
+ * held - stands in for a real APRS position payload until the NMEA fields
+ * get wired into one. Callsign and interval come from tnc_config (runtime-
+ * settable via KISS_CMD_SETHARDWARE, persisted across reboots).
  */
-#define GPS_BEACON_INTERVAL_MS (10 * MSEC_PER_SEC)
 #define GPS_BEACON_PAYLOAD_LEN 32
 
 static void gps_beacon_work_handler(struct k_work *work);
@@ -54,12 +56,32 @@ static void gps_beacon_work_handler(struct k_work *work)
 
 	ax25_frame_t frame = {0};
 
-	ax25_parse_callsign("N0CALL", &frame.src);
+	frame.src = *tnc_config_get_callsign();
 	ax25_parse_callsign("APRS", &frame.dest);
 	frame.control = AX25_CTRL_UI;
 	frame.pid = AX25_PID_NO_L3;
-	frame.payload_len = GPS_BEACON_PAYLOAD_LEN;
-	sys_rand_get(frame.payload, frame.payload_len);
+
+	size_t off = 0;
+
+	/* '!' = APRS position report, no APRS messaging - this is an unattended
+	 * standalone tracker with no return path, so it can never receive or
+	 * ack a message (see APRS101.pdf ch.5, data type identifiers '!' vs '=').
+	 */
+	frame.payload[off++] = '!';
+
+	sys_rand_get(&frame.payload[off], GPS_BEACON_PAYLOAD_LEN);
+	off += GPS_BEACON_PAYLOAD_LEN;
+
+	const char *comment = tnc_config_get_comment();
+	size_t comment_len = strlen(comment);
+
+	if (comment_len > sizeof(frame.payload) - off) {
+		comment_len = sizeof(frame.payload) - off;
+	}
+	memcpy(&frame.payload[off], comment, comment_len);
+	off += comment_len;
+
+	frame.payload_len = off;
 
 	uint8_t tx_buf[AX25_MAX_FRAME_LEN];
 	int tx_len = ax25_encode(&frame, tx_buf, sizeof(tx_buf));
@@ -69,7 +91,7 @@ static void gps_beacon_work_handler(struct k_work *work)
 		tnc_queue_tx_packet(tx_buf, (size_t)tx_len, APP_MODE_STANDALONE);
 	}
 
-	k_work_reschedule(&gps_beacon_work, K_MSEC(GPS_BEACON_INTERVAL_MS));
+	k_work_reschedule(&gps_beacon_work, K_SECONDS(tnc_config_get_beacon_interval_s()));
 }
 
 /* $GPGGA/$GNGGA,time,lat,NS,lon,EW,fix_quality,... - fix_quality (the field

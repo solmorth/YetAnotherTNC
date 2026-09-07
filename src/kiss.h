@@ -11,6 +11,7 @@
 #define KISS_TFESC 0xDD
 
 #define KISS_CMD_DATA 0x00
+#define KISS_CMD_SETHARDWARE 0x06 /* TNC-specific config (callsign, beacon interval, ...) */
 
 typedef struct {
 	uint8_t buffer[512];
