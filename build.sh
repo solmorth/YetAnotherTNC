@@ -39,34 +39,46 @@ fi
 
 # 3. Setup Zephyr SDK if not present
 if [ -z "$ZEPHYR_SDK_INSTALL_DIR" ]; then
-    DETECTED_SDK=$(ls -d "$SCRIPT_DIR"/.zephyr-sdk "$HOME"/zephyr-sdk-* /opt/zephyr-sdk-* "$HOME"/.local/zephyr-sdk-* 2>/dev/null | head -n 1 || true)
-    if [ -n "$DETECTED_SDK" ] && [ -d "$DETECTED_SDK" ]; then
+    SDK_DIR="$SCRIPT_DIR/.zephyr-sdk"
+    DETECTED_SDK=""
+    for cand in "$SDK_DIR" "$HOME"/zephyr-sdk-* /opt/zephyr-sdk-* "$HOME"/.local/zephyr-sdk-*; do
+        if [ -d "$cand" ] && { [ -f "$cand/cmake/Zephyr-sdkConfig.cmake" ] || [ -f "$cand/Zephyr-sdkConfig.cmake" ]; } && [ -f "$cand/gnu/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc" ]; then
+            DETECTED_SDK="$cand"
+            break
+        fi
+    done
+
+    if [ -n "$DETECTED_SDK" ]; then
         export ZEPHYR_SDK_INSTALL_DIR="$DETECTED_SDK"
     else
-        SDK_DIR="$SCRIPT_DIR/.zephyr-sdk"
-        echo "[+] Zephyr SDK not found. Downloading SDK to $SDK_DIR..."
+        if [ ! -f "$SDK_DIR/setup.sh" ]; then
+            echo "[+] Zephyr SDK not found or incomplete. Downloading SDK to $SDK_DIR..."
+            SDK_VERSION="$(cat "$ZEPHYR_BASE/SDK_VERSION" 2>/dev/null || echo "1.0.1")"
+            HOST_OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+            HOST_ARCH="$(uname -m)"
+            SDK_ARCH_STR="${HOST_OS}-${HOST_ARCH}"
+            SDK_TAR="zephyr-sdk-${SDK_VERSION}_${SDK_ARCH_STR}_minimal.tar.xz"
+            SDK_URL="https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${SDK_VERSION}/${SDK_TAR}"
 
-        SDK_VERSION="$(cat "$ZEPHYR_BASE/SDK_VERSION" 2>/dev/null || echo "1.0.1")"
-        HOST_OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
-        HOST_ARCH="$(uname -m)"
-        SDK_ARCH_STR="${HOST_OS}-${HOST_ARCH}"
-        SDK_TAR="zephyr-sdk-${SDK_VERSION}_${SDK_ARCH_STR}_minimal.tar.xz"
-        SDK_URL="https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${SDK_VERSION}/${SDK_TAR}"
+            TMP_DIR="$(mktemp -d)"
+            echo "[+] Downloading $SDK_URL..."
+            if command -v curl >/dev/null 2>&1; then
+                curl -fL "$SDK_URL" -o "$TMP_DIR/$SDK_TAR"
+            elif command -v wget >/dev/null 2>&1; then
+                wget -O "$TMP_DIR/$SDK_TAR" "$SDK_URL"
+            else
+                python3 -c "import urllib.request; urllib.request.urlretrieve('$SDK_URL', '$TMP_DIR/$SDK_TAR')"
+            fi
 
-        TMP_DIR="$(mktemp -d)"
-        echo "[+] Downloading $SDK_URL..."
-        if command -v curl >/dev/null 2>&1; then
-            curl -fL "$SDK_URL" -o "$TMP_DIR/$SDK_TAR"
-        elif command -v wget >/dev/null 2>&1; then
-            wget -O "$TMP_DIR/$SDK_TAR" "$SDK_URL"
-        else
-            python3 -c "import urllib.request; urllib.request.urlretrieve('$SDK_URL', '$TMP_DIR/$SDK_TAR')"
+            echo "[+] Extracting Zephyr SDK..."
+            mkdir -p "$SDK_DIR"
+            tar -xf "$TMP_DIR/$SDK_TAR" -C "$SDK_DIR" --strip-components=1
+            rm -rf "$TMP_DIR"
         fi
 
-        echo "[+] Extracting Zephyr SDK..."
-        mkdir -p "$SDK_DIR"
-        tar -xf "$TMP_DIR/$SDK_TAR" -C "$SDK_DIR" --strip-components=1
-        rm -rf "$TMP_DIR"
+        if [ ! -f "$SDK_DIR/gnu/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc" ]; then
+            rm -rf "$SDK_DIR/gnu/arm-zephyr-eabi"
+        fi
 
         echo "[+] Setting up Zephyr SDK (toolchain: arm-zephyr-eabi)..."
         (
