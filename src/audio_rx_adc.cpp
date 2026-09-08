@@ -80,7 +80,7 @@ static void rx_audio_thread_entry(void *p1, void *p2, void *p3)
 				}
 				if (++sample_count >= 9600) {
 					int16_t pp = window_max - window_min;
-					if (pp > 8) {
+					if (pp > 200) {
 						printk("[AFSK RX] Pin 31 activity: %d counts peak-to-peak\n", pp);
 					}
 					sample_count = 0;
