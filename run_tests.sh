@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Builds and runs the host-side unit tests for the Zephyr-free logic modules
-# (ax25.c, kiss.c, fx25.c, afsk_modulator.cpp, afsk_demodulator.cpp) and
-# reports gcov line coverage for each, failing if any drops below 80%.
+# (ax25.c, kiss.c, fx25.c, gps_format.c, afsk_modulator.cpp,
+# afsk_demodulator.cpp) and reports gcov line coverage for each, failing if
+# any drops below 80%.
 #
-# tnc.c, main.c, ptt.c, mode_select.c, audio_tx_pwm.cpp and audio_rx_adc.cpp
-# are excluded: they're Zephyr/hardware-coupled (UART, GPIO, PWM, ADC, BLE)
-# and aren't unit-testable on host without mocking the whole Zephyr HAL.
-# Those get exercised by hand on real promicro_nrf52840 boards instead.
+# tnc.c, main.c, ptt.c, mode_select.c, gps.c, audio_tx_pwm.cpp and
+# audio_rx_adc.cpp are excluded: they're Zephyr/hardware-coupled (UART,
+# GPIO, PWM, ADC, BLE) and aren't unit-testable on host without mocking the
+# whole Zephyr HAL. Those get exercised by hand on real promicro_nrf52840
+# boards instead.
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -27,11 +29,13 @@ gcc -std=c11 -Wall --coverage -O0 -o "$BUILD_DIR/test_fx25" \
 g++ -std=c++17 -Wall --coverage -O0 -o "$BUILD_DIR/test_afsk_loopback" \
 	"$SRC_DIR/test_afsk_loopback.cpp" "$SRC_DIR/afsk_modulator.cpp" \
 	"$SRC_DIR/afsk_demodulator.cpp" "$SRC_DIR/fx25.c" "$SRC_DIR/ax25.c"
+gcc -std=c11 -Wall --coverage -O0 -o "$BUILD_DIR/test_gps_format" \
+	"$SRC_DIR/test_gps_format.c" "$SRC_DIR/gps_format.c"
 
 echo
 echo "[+] Running tests..."
 overall_status=0
-for t in test_ax25 test_kiss test_fx25 test_afsk_loopback; do
+for t in test_ax25 test_kiss test_fx25 test_afsk_loopback test_gps_format; do
 	echo "--- $t ---"
 	if ! "$BUILD_DIR/$t"; then
 		overall_status=1
@@ -46,6 +50,7 @@ declare -A file_to_gcda=(
 	[ax25.c]="test_ax25-ax25.gcda"
 	[kiss.c]="test_kiss-kiss.gcda"
 	[fx25.c]="test_fx25-fx25.gcda"
+	[gps_format.c]="test_gps_format-gps_format.gcda"
 	[afsk_modulator.cpp]="test_afsk_loopback-afsk_modulator.gcda"
 	[afsk_demodulator.cpp]="test_afsk_loopback-afsk_demodulator.gcda"
 )

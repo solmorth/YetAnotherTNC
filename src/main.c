@@ -357,8 +357,12 @@ int main(void)
 	ptt_init();
 
 	if (mode_select_get_current() == APP_MODE_STANDALONE) {
-		gps_init();
-		gps_enable_set(true);
+		if (tnc_config_get_fixed_pos_enabled()) {
+			gps_start_fixed_position_beacon();
+		} else {
+			gps_init();
+			gps_enable_set(true);
+		}
 	}
 
 	tnc_init();

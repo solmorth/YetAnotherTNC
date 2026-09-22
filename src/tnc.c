@@ -308,13 +308,13 @@ void tnc_process_ble_bytes(const uint8_t *data, size_t len, app_mode_t mode, con
 				 */
 				tnc_queue_tx_packet(payload, payload_len, mode);
 			} else if (cmd == KISS_CMD_SETHARDWARE) {
-				char resp[96];
+				char resp[144];
 
 				tnc_config_handle_command(payload, payload_len, resp, sizeof(resp));
 				printk("[CFG] %.*s -> %s\n", (int)payload_len, payload, resp);
 
 				if (ble_send != NULL) {
-					uint8_t kiss_buf[128];
+					uint8_t kiss_buf[160];
 					int kiss_len = kiss_encode_frame(KISS_CMD_SETHARDWARE, (const uint8_t *)resp,
 									  strlen(resp), kiss_buf, sizeof(kiss_buf));
 					if (kiss_len > 0) {

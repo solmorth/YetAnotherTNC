@@ -3,10 +3,10 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/uart.h>
-#include <zephyr/random/random.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/sys/ring_buffer.h>
 #include "ax25.h"
+#include "gps_format.h"
 #include "mode_select.h"
 #include "tnc.h"
 #include "tnc_config.h"
@@ -35,14 +35,14 @@ static bool gps_enabled = false;
 RING_BUF_DECLARE(gps_rx_ring_buf, GPS_RX_RING_BUF_SIZE);
 
 static bool gps_has_fix;
+static bool gps_has_position;
+static char gps_lat[9];
+static char gps_lon[10];
 
-/* Random test frame sent at the configured beacon interval while a fix is
- * held - stands in for a real APRS position payload until the NMEA fields
- * get wired into one. Callsign and interval come from tnc_config (runtime-
- * settable via KISS_CMD_SETHARDWARE, persisted across reboots).
+/* Beacon sent at the configured interval while a fix is held. Callsign and
+ * interval come from tnc_config (runtime-settable via KISS_CMD_SETHARDWARE,
+ * persisted across reboots); lat/lon from the most recent GGA sentence.
  */
-#define GPS_BEACON_PAYLOAD_LEN 32
-
 static void gps_beacon_work_handler(struct k_work *work);
 static K_WORK_DELAYABLE_DEFINE(gps_beacon_work, gps_beacon_work_handler);
 
@@ -50,8 +50,40 @@ static void gps_beacon_work_handler(struct k_work *work)
 {
 	ARG_UNUSED(work);
 
-	if (!gps_has_fix) {
-		return;
+	char lat[9];
+	char lon[10];
+
+	if (tnc_config_get_fixed_pos_enabled()) {
+		/* Fixed position mode never has GPS running to kick this work
+		 * item back alive (see gps_start_fixed_position_beacon), so
+		 * it must always reschedule itself below, unlike the
+		 * live-GPS path which relies on gps_process_nmea_line to
+		 * restart it on fix acquisition.
+		 */
+		if (!tnc_config_get_fixed_pos_configured()) {
+			k_work_reschedule(&gps_beacon_work,
+					   K_SECONDS(tnc_config_get_beacon_interval_s()));
+			return;
+		}
+		gps_format_encode_position(tnc_config_get_fixed_lat(), tnc_config_get_fixed_lon(),
+					    lat, lon);
+	} else {
+		if (!gps_has_fix) {
+			return;
+		}
+
+		/* fix_quality can flip true on a GGA line whose lat/lon fields are
+		 * still parseable garbage in some receivers' first fixed sentence -
+		 * don't transmit a position until gps_process_nmea_line has actually
+		 * captured one.
+		 */
+		if (!gps_has_position) {
+			k_work_reschedule(&gps_beacon_work,
+					   K_SECONDS(tnc_config_get_beacon_interval_s()));
+			return;
+		}
+		memcpy(lat, gps_lat, sizeof(lat));
+		memcpy(lon, gps_lon, sizeof(lon));
 	}
 
 	ax25_frame_t frame = {0};
@@ -61,33 +93,21 @@ static void gps_beacon_work_handler(struct k_work *work)
 	frame.control = AX25_CTRL_UI;
 	frame.pid = AX25_PID_NO_L3;
 
-	size_t off = 0;
+	frame.payload_len = gps_format_build_position_payload(
+		lat, lon, tnc_config_get_comment(), frame.payload, sizeof(frame.payload));
 
-	/* '!' = APRS position report, no APRS messaging - this is an unattended
-	 * standalone tracker with no return path, so it can never receive or
-	 * ack a message (see APRS101.pdf ch.5, data type identifiers '!' vs '=').
-	 */
-	frame.payload[off++] = '!';
-
-	sys_rand_get(&frame.payload[off], GPS_BEACON_PAYLOAD_LEN);
-	off += GPS_BEACON_PAYLOAD_LEN;
-
-	const char *comment = tnc_config_get_comment();
-	size_t comment_len = strlen(comment);
-
-	if (comment_len > sizeof(frame.payload) - off) {
-		comment_len = sizeof(frame.payload) - off;
+	if (frame.payload_len == 0) {
+		k_work_reschedule(&gps_beacon_work,
+				   K_SECONDS(tnc_config_get_beacon_interval_s()));
+		return;
 	}
-	memcpy(&frame.payload[off], comment, comment_len);
-	off += comment_len;
-
-	frame.payload_len = off;
 
 	uint8_t tx_buf[AX25_MAX_FRAME_LEN];
 	int tx_len = ax25_encode(&frame, tx_buf, sizeof(tx_buf));
 
 	if (tx_len > 0) {
-		printk("[GPS] Fix held, sending %d-byte test beacon\n", tx_len);
+		printk("[GPS] %s, sending %d-byte position beacon\n",
+		       tnc_config_get_fixed_pos_enabled() ? "Fixed position" : "Fix held", tx_len);
 		tnc_queue_tx_packet(tx_buf, (size_t)tx_len, APP_MODE_STANDALONE);
 	}
 
@@ -103,6 +123,17 @@ static void gps_process_nmea_line(const char *line)
 
 	if (strncmp(line, "$GPGGA", 6) != 0 && strncmp(line, "$GNGGA", 6) != 0) {
 		return;
+	}
+
+	/* Refresh the last-known position on every GGA line, not just fix
+	 * transitions, so the beacon reflects current position while moving.
+	 */
+	char lat[9];
+	char lon[10];
+	if (gps_format_parse_gga_position(line, lat, lon)) {
+		memcpy(gps_lat, lat, sizeof(gps_lat));
+		memcpy(gps_lon, lon, sizeof(gps_lon));
+		gps_has_position = true;
 	}
 
 	const char *field = line;
@@ -231,4 +262,10 @@ void gps_enable_set(bool enable)
 bool gps_is_enabled(void)
 {
 	return gps_enabled;
+}
+
+void gps_start_fixed_position_beacon(void)
+{
+	printk("[GPS] Fixed position mode: GPS hardware not initialized, beaconing stored position\n");
+	k_work_reschedule(&gps_beacon_work, K_NO_WAIT);
 }
