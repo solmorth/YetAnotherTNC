@@ -356,13 +356,12 @@ int main(void)
 	tnc_config_init();
 	ptt_init();
 
-	if (mode_select_get_current() == APP_MODE_STANDALONE) {
-		if (tnc_config_get_fixed_pos_enabled()) {
-			gps_start_fixed_position_beacon();
-		} else {
-			gps_init();
-			gps_enable_set(true);
-		}
+	bool standalone_fixed_pos = mode_select_get_current() == APP_MODE_STANDALONE &&
+				    tnc_config_get_fixed_pos_enabled();
+
+	if (mode_select_get_current() == APP_MODE_STANDALONE && !standalone_fixed_pos) {
+		gps_init();
+		gps_enable_set(true);
 	}
 
 	tnc_init();
@@ -381,6 +380,18 @@ int main(void)
 		printk("ERROR: UART device not ready\n");
 	} else {
 		tnc_tx_queue_init(uart_dev);
+	}
+
+	/* Only now that tnc_init()/fx25_init()/audio_tx_pwm_init()/
+	 * tnc_tx_queue_init() have all run is the TX pipeline actually ready
+	 * to carry a frame. gps_start_fixed_position_beacon() can fire the
+	 * beacon work item with K_NO_WAIT, so starting it any earlier races
+	 * the still-uninitialized PWM/DAC TX hardware - unlike the live-GPS
+	 * path above, which can't queue a beacon until a real fix arrives,
+	 * long after boot finishes.
+	 */
+	if (standalone_fixed_pos) {
+		gps_start_fixed_position_beacon();
 	}
 
 	/* ---- BLE init (first, so device is always discoverable) ------- */
