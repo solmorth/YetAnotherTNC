@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push:
+    tags: ['v?[0-9]*']   # 1.2.3 or v1.2.3
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Host tests
+        run: ./run_tests.sh
+
+      - name: Cache Zephyr workspace + SDK
+        uses: actions/cache@v4
+        with:
+          path: |
+            zephyrproject
+            .zephyr-sdk
+          key: zephyr-${{ hashFiles('build.sh') }}
+
+      - run: sudo apt-get update && sudo apt-get install -y device-tree-compiler
+
+      - name: Build firmware
+        run: ./build.sh
+
+      - name: Stage artifact
+        run: cp build/zephyr/zephyr.uf2 "yatnc-${GITHUB_REF_NAME}.uf2"
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: yatnc-*.uf2
+          generate_release_notes: true
