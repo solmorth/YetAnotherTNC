@@ -123,6 +123,53 @@ Generated from KiCad BOM ([`pcb/yatnc.csv`](pcb/yatnc.csv)):
 | SW1 | RST | 1 | Tactile push button switch (6mm) |
 | TO TRCV | JST | 1 | JST-EH 10-pin vertical connector (to transceiver) |
 
+### Transceiver connector (JST 10-pin)
+
+> [!IMPORTANT]
+> - **RS-232 voltage levels (±12V)**: The serial lines on the 10-pin JST connector (`TO TRCV`) are true **RS-232 (±12V)** driven by the onboard MAX3232 transceiver, **not** 3.3V or 5V TTL. Do not connect them directly to logic-level UART pins!
+> - **RX / TX crossover**: The RS-232 RX and TX lines **must be crossed** between the board's 10-pin JST connector and the radio (Board TX &rarr; Radio RX, Board RX &rarr; Radio TX).
+
+| Pin | Net | Function / Description |
+|:---:|---|---|
+| 1 | `PKD` | TX Packet Audio (from PWM filter) |
+| 2 | `GND` | Ground |
+| 3 | `PTT` | PTT output |
+| 4 | NC | Unconnected |
+| 5 | `AUDIO TRCV` | RX Audio (to ADC demodulator) |
+| 6 | NC | Unconnected |
+| 7 | `RX` | RS-232 RX (±12V, connect to Radio TX — **crossed**) |
+| 8 | `TX` | RS-232 TX (±12V, connect to Radio RX — **crossed**) |
+| 9 | NC | Unconnected |
+| 10 | NC | Unconnected |
+
+### Bill of Materials (BOM)
+
+Generated from KiCad BOM ([`pcb/yatnc.csv`](pcb/yatnc.csv)):
+
+| Designator | Value / Part | Qty | Description |
+|---|---|:---:|---|
+| C1 | 270µF 35V | 1 | Polarized electrolytic capacitor |
+| C2, C4, C7, C8, C9, C10, C11, C12 | 100nF | 8 | Ceramic disc capacitor |
+| C3, C5 | 5.6nF | 2 | Ceramic disc capacitor |
+| C6 | 470µF 10V | 1 | Polarized electrolytic capacitor |
+| D1 | LPWR | 1 | Power indicator LED (5mm) |
+| D2 | 1N5822 | 1 | Schottky diode (3A, 40V) |
+| D3 | BZW04 18V | 1 | TVS transient voltage suppressor diode |
+| D4 | LPTT | 1 | PTT indicator LED (5mm) |
+| D5 | 1N4148 | 1 | High-speed switching diode |
+| IC1 | MAX3232CDR | 1 | 3.3V/5V RS-232 transceiver (SOIC-16) |
+| J1 | Conn_02x03_Top_Bottom | 1 | 2×3 pin header (2.54mm pitch) |
+| J4 | DFR0570 | 1 | DFRobot DFR0570 DC-DC buck converter module |
+| J5, J6 | Conn_01x13_Socket | 2 | 1×13 female socket headers (for Pro Micro nRF52840) |
+| J7 | Conn_01x04_Pin | 1 | JST-EH 4-pin vertical header (2.50mm pitch) |
+| PWR | Conn_01x02_Socket | 1 | JST-EH 2-pin vertical power connector (2.50mm pitch) |
+| Q1, Q2 | BC547 | 2 | NPN bipolar junction transistor (TO-92) |
+| R1, R3, R4, R5, R10 | 1k | 5 | Axial resistor 1kΩ (DIN0207) |
+| R2 | 1ohm | 1 | Axial resistor 1Ω (DIN0207) |
+| R6, R7, R8, R9 | 10k | 4 | Axial resistor 10kΩ (DIN0207) |
+| SW1 | RST | 1 | Tactile push button switch (6mm) |
+| TO TRCV | JST | 1 | JST-EH 10-pin vertical connector (to transceiver) |
+
 ## Operating modes
 
 The firmware selects one of four modes at boot (and re-checks live on every
