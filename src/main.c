@@ -24,10 +24,12 @@
 
 #include "mode_select.h"
 #include "ptt.h"
+#include "gps.h"
 #include "tnc.h"
 #include "ax25.h"
 #include "fx25.h"
 #include "kiss.h"
+#include "tnc_config.h"
 #include "audio_tx_pwm.hpp"
 #include "audio_rx_adc.hpp"
 #include "log_ts.h"
@@ -249,7 +251,7 @@ static void nus_received(struct bt_conn *conn, const void *data,
 		tnc_queue_tx_packet((const uint8_t *)data, len, mode);
 	} else {
 		printk("BLE -> TNC Engine (%s): %d bytes\n", mode_select_get_name(mode), len);
-		tnc_process_ble_bytes((const uint8_t *)data, len, mode, uart_dev);
+		tnc_process_ble_bytes((const uint8_t *)data, len, mode, uart_dev, ble_send_raw);
 	}
 }
 
@@ -351,7 +353,17 @@ int main(void)
 	printk("=== UART <-> BLE NUS Bridge & APRS TNC Server ===\n");
 
 	mode_select_init();
+	tnc_config_init();
 	ptt_init();
+
+	bool standalone_fixed_pos = mode_select_get_current() == APP_MODE_STANDALONE &&
+				    tnc_config_get_fixed_pos_enabled();
+
+	if (mode_select_get_current() == APP_MODE_STANDALONE && !standalone_fixed_pos) {
+		gps_init();
+		gps_enable_set(true);
+	}
+
 	tnc_init();
 	fx25_init();
 	printk("FX.25 FEC Engine Initialized (RS(255,239), Tag_01 0x%016llX)\n",
@@ -368,6 +380,18 @@ int main(void)
 		printk("ERROR: UART device not ready\n");
 	} else {
 		tnc_tx_queue_init(uart_dev);
+	}
+
+	/* Only now that tnc_init()/fx25_init()/audio_tx_pwm_init()/
+	 * tnc_tx_queue_init() have all run is the TX pipeline actually ready
+	 * to carry a frame. gps_start_fixed_position_beacon() can fire the
+	 * beacon work item with K_NO_WAIT, so starting it any earlier races
+	 * the still-uninitialized PWM/DAC TX hardware - unlike the live-GPS
+	 * path above, which can't queue a beacon until a real fix arrives,
+	 * long after boot finishes.
+	 */
+	if (standalone_fixed_pos) {
+		gps_start_fixed_position_beacon();
 	}
 
 	/* ---- BLE init (first, so device is always discoverable) ------- */

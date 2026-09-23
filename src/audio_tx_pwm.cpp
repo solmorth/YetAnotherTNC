@@ -85,7 +85,8 @@ extern "C" void audio_tx_pwm_play_packet(const uint8_t *data, size_t len, app_mo
 		return;
 	}
 
-	bool ptt_needed = (mode == APP_MODE_PACKET_TNC || mode == APP_MODE_DIGIPEATER);
+	bool ptt_needed = (mode == APP_MODE_PACKET_TNC || mode == APP_MODE_DIGIPEATER ||
+			   mode == APP_MODE_STANDALONE);
 	if (!ptt_needed) {
 		return;
 	}

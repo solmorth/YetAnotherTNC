@@ -2,9 +2,10 @@
 
 Zephyr firmware (and, eventually, a companion PCB) for a nRF52840 Pro Micro
 board that turns a phone's Bluetooth connection into a packet radio TNC.
-Depending on how two GPIO pins are strapped at boot, the board acts as a
+Depending on how three GPIO pins are strapped at boot, the board acts as a
 transparent UART↔BLE bridge, a real AX.25/KISS TNC driving 1200 baud Bell 202
-AFSK audio (with optional FX.25 FEC), or an AX.25 digipeater.
+AFSK audio (with optional FX.25 FEC), an AX.25 digipeater, or a standalone GPS
+APRS tracker that beacons its position with no phone attached.
 
 > **Early stage.** This has not been widely field-tested — one unit rides in
 > the author's car and works there, but it hasn't been validated across
@@ -24,9 +25,11 @@ KISS or TNC2 monitor lines can talk to it; see [Phone app](#phone-app) below.
   - [Transceiver connector (JST 10-pin)](#transceiver-connector-jst-10-pin)
   - [Bill of Materials (BOM)](#bill-of-materials-bom)
 - [Operating modes](#operating-modes)
+- [Runtime configuration](#runtime-configuration)
 - [Known limitations](#known-limitations)
 - [Phone app](#phone-app)
 - [Building](#building)
+  - [Releases](#releases)
 - [Testing](#testing)
 - [Hardware-in-the-loop (HIL) test plan](#hardware-in-the-loop-hil-test-plan)
 - [Repo layout](#repo-layout)
@@ -69,6 +72,56 @@ PCB design files and bill of materials live under [`pcb/`](pcb/) (`yatnc.kicad_s
 | 22 (P0.22) | `ptt_pin` | PTT out | Active-high. |
 | 2 (P0.02) | `mode_pin` | Mode select | Pull-up, active-low. Grounded → PACKET_TNC. |
 | 29 (P0.29) | `digi_pin` | Digipeater select | Pull-up, active-low. Grounded → DIGIPEATER (overrides pin 2). |
+| P1.15 | `standalone_pin` | Standalone GPS select | Pull-up, active-low. Grounded → STANDALONE (overrides pins 2 and 29). |
+| P0.11 / P1.00 | `uart1` | GPS NMEA in | 9600 baud, TX / RX respectively (the GPS module's RX / TX). Only used in STANDALONE mode. |
+| P1.04 | `gps_enable_pin` | GPS power enable | Active-high, pulled down. Driven high at boot in STANDALONE mode (unless a fixed position is configured). |
+
+### Transceiver connector (JST 10-pin)
+
+> [!IMPORTANT]
+> - **RS-232 voltage levels (±12V)**: The serial lines on the 10-pin JST connector (`TO TRCV`) are true **RS-232 (±12V)** driven by the onboard MAX3232 transceiver, **not** 3.3V or 5V TTL. Do not connect them directly to logic-level UART pins!
+> - **RX / TX crossover**: The RS-232 RX and TX lines **must be crossed** between the board's 10-pin JST connector and the radio (Board TX &rarr; Radio RX, Board RX &rarr; Radio TX).
+
+| Pin | Net | Function / Description |
+|:---:|---|---|
+| 1 | `PKD` | TX Packet Audio (from PWM filter) |
+| 2 | `GND` | Ground |
+| 3 | `PTT` | PTT output |
+| 4 | NC | Unconnected |
+| 5 | `AUDIO TRCV` | RX Audio (to ADC demodulator) |
+| 6 | NC | Unconnected |
+| 7 | `RX` | RS-232 RX (±12V, connect to Radio TX — **crossed**) |
+| 8 | `TX` | RS-232 TX (±12V, connect to Radio RX — **crossed**) |
+| 9 | NC | Unconnected |
+| 10 | NC | Unconnected |
+
+### Bill of Materials (BOM)
+
+Generated from KiCad BOM ([`pcb/yatnc.csv`](pcb/yatnc.csv)):
+
+| Designator | Value / Part | Qty | Description |
+|---|---|:---:|---|
+| C1 | 270µF 35V | 1 | Polarized electrolytic capacitor |
+| C2, C4, C7, C8, C9, C10, C11, C12 | 100nF | 8 | Ceramic disc capacitor |
+| C3, C5 | 5.6nF | 2 | Ceramic disc capacitor |
+| C6 | 470µF 10V | 1 | Polarized electrolytic capacitor |
+| D1 | LPWR | 1 | Power indicator LED (5mm) |
+| D2 | 1N5822 | 1 | Schottky diode (3A, 40V) |
+| D3 | BZW04 18V | 1 | TVS transient voltage suppressor diode |
+| D4 | LPTT | 1 | PTT indicator LED (5mm) |
+| D5 | 1N4148 | 1 | High-speed switching diode |
+| IC1 | MAX3232CDR | 1 | 3.3V/5V RS-232 transceiver (SOIC-16) |
+| J1 | Conn_02x03_Top_Bottom | 1 | 2×3 pin header (2.54mm pitch) |
+| J4 | DFR0570 | 1 | DFRobot DFR0570 DC-DC buck converter module |
+| J5, J6 | Conn_01x13_Socket | 2 | 1×13 female socket headers (for Pro Micro nRF52840) |
+| J7 | Conn_01x04_Pin | 1 | JST-EH 4-pin vertical header (2.50mm pitch) |
+| PWR | Conn_01x02_Socket | 1 | JST-EH 2-pin vertical power connector (2.50mm pitch) |
+| Q1, Q2 | BC547 | 2 | NPN bipolar junction transistor (TO-92) |
+| R1, R3, R4, R5, R10 | 1k | 5 | Axial resistor 1kΩ (DIN0207) |
+| R2 | 1ohm | 1 | Axial resistor 1Ω (DIN0207) |
+| R6, R7, R8, R9 | 10k | 4 | Axial resistor 10kΩ (DIN0207) |
+| SW1 | RST | 1 | Tactile push button switch (6mm) |
+| TO TRCV | JST | 1 | JST-EH 10-pin vertical connector (to transceiver) |
 
 ### Transceiver connector (JST 10-pin)
 
@@ -119,19 +172,20 @@ Generated from KiCad BOM ([`pcb/yatnc.csv`](pcb/yatnc.csv)):
 
 ## Operating modes
 
-The firmware selects one of three modes at boot (and re-checks live on every
-packet) by reading the mode-select and digipeater-select pins above. There is
-no software switch — the mode is purely hardware-strapped, and both pins are
+The firmware selects one of four modes at boot (and re-checks live on every
+packet) by reading the mode-select, digipeater-select and standalone-select pins above. There is
+no software switch — the mode is purely hardware-strapped, and the pins are
 read fresh on every packet, so mode can in principle change at runtime by
 re-wiring the straps (no latching).
 
 Resolution order (`mode_select_get_current()` in `src/mode_select.c`):
 
-1. `digi_pin` grounded → **DIGIPEATER**
-2. else `mode_pin` grounded → **PACKET_TNC**
-3. else (both floating/high, the default) → **BRIDGE**
+1. `standalone_pin` grounded → **STANDALONE**
+2. else `digi_pin` grounded → **DIGIPEATER**
+3. else `mode_pin` grounded → **PACKET_TNC**
+4. else (all floating/high, the default) → **BRIDGE**
 
-### 1. BRIDGE (default — both pins open)
+### 1. BRIDGE (default — all pins open)
 
 A transparent, byte-for-byte serial bridge between the radio's RS232 (UART0)
 and the phone app over BLE (NUS). No AX.25/KISS parsing, no AFSK, no PTT —
@@ -206,6 +260,45 @@ re-transmitted back out over radio — a standard WIDEn-N digipeater. The frame
 is forwarded to the BLE app either way, repeated or not, so the app sees
 everything heard on the channel.
 
+### 4. STANDALONE (`standalone_pin` grounded, overrides the other two)
+
+A GPS APRS tracker. The board beacons its position over the radio on a timer,
+with no phone needed. Otherwise it behaves like PACKET_TNC (the BLE app can
+still connect, send frames, and change [settings](#runtime-configuration)).
+
+- **Live GPS** (default): at boot the firmware powers the GPS module
+  (`gps_enable_pin`) and reads NMEA from `uart1`. `$GPGGA`/`$GNGGA` sentences
+  are parsed for fix state and position. The first fix starts the beacon; it
+  then repeats every `BEACON` seconds while the fix is held, using the most
+  recent position. No fix (or fix lost) → nothing is transmitted.
+- **Fixed position**: with `SET FIXEDPOS=ON` (and both `LAT`/`LON` set) the
+  GPS module is never powered or touched. The stored coordinates are beaconed
+  on the same interval, starting once the TX pipeline is up. Handy indoors or
+  with no GPS fitted. Until both coordinates are set, nothing is sent.
+- **Beacon format**: an uncompressed APRS position report (`!DDMM.hhN/DDDMM.hhE>` + comment)
+  from your callsign to `APRS`, primary-table car symbol (`/>`), sent through the
+  normal TX path (PTT → AFSK → PWM).
+
+## Runtime configuration
+
+Callsign, beacon interval, comment and fixed position are set at runtime with
+single-line ASCII commands sent as KISS command `0x06` (`KISS_CMD_SETHARDWARE`)
+over BLE. Each command is applied immediately, saved to flash, and answered
+with a KISS `0x06` frame carrying the reply text. Errors are reported in the
+reply (`ERR ...`), never as a dropped connection. Settings survive reboots.
+
+| Command | Effect | Default |
+|---|---|---|
+| `SET CALL=N0CALL-9` | Source callsign for beacons | `N0CALL` |
+| `SET BEACON=120` | Beacon interval in seconds (clamped to 10–3600) | `60` |
+| `SET COMMENT=text` | Beacon comment (truncated to 32 chars) | empty |
+| `SET FIXEDPOS=ON\|OFF` | Beacon a stored position instead of using GPS | `OFF` |
+| `SET LAT=52.4627` / `SET LON=16.9005` | Fixed position, decimal degrees | unset |
+| `GET` | Reply with all current values | |
+
+The settings live in a 32 KiB NVS partition at `0x90000` (see `app.overlay`),
+deliberately clear of the UF2 bootloader. The BLE device name is `YATNC`.
+
 ## Known limitations
 
 - **AFSK decode is functional but not polished.** It works, but weak-signal
@@ -215,6 +308,10 @@ everything heard on the channel.
   validated across multiple radios, RF conditions, or users.
 - FX.25 TX wrapping has no live control path yet (`audio_tx_set_fx25`, code
   only).
+- STANDALONE mode parses GGA sentences only, with no altitude, speed/course or
+  compressed positions in the beacon. The symbol is fixed to the car icon.
+- The `SET`/`GET` config commands are not yet exposed in any phone app; send
+  them yourself as KISS `0x06` frames.
 
 ## Phone app
 
@@ -242,13 +339,27 @@ they're much faster. Pass anything after the script name straight through to
 ./build.sh -b promicro_nrf52840 --pristine
 ```
 
-Set `ZEPHYR_SDK_INSTALL_DIR` if the script can't find your SDK on its own; it
-looks in the usual spots (`~/zephyr-sdk-*`, `/opt/zephyr-sdk-*`, etc).
+If no usable Zephyr SDK is found (it looks in `.zephyr-sdk/`,
+`~/zephyr-sdk-*`, `/opt/zephyr-sdk-*`, etc, and checks that CMake and the ARM
+compiler are actually present), the script downloads a minimal one into
+`.zephyr-sdk/` and sets up the `arm-zephyr-eabi` toolchain. Set
+`ZEPHYR_SDK_INSTALL_DIR` to use your own instead.
 
 Output is `build/zephyr/zephyr.uf2`. To flash: double-tap the board's reset
 button to drop into the UF2 bootloader (it'll show up as a USB drive), then
-copy the file over. `bootloader/` has the nice!nano bootloader itself, for
-boards that don't already have one.
+copy the file over. Boards need the nice!nano / Adafruit UF2 bootloader
+already installed.
+
+### Releases
+
+Pushing a version tag (`1.2.3` or `v1.2.3`) triggers
+`.github/workflows/release.yml`, which runs the host tests, builds the
+firmware, and publishes a GitHub release with `yatnc-<tag>.uf2` attached, so
+you can flash without building.
+
+```sh
+git tag 1.2.3 && git push origin 1.2.3
+```
 
 ## Testing
 
@@ -257,9 +368,9 @@ boards that don't already have one.
 ```
 
 Builds and runs the host-side unit tests for everything that doesn't touch
-Zephyr or real hardware — AX.25, KISS, FX.25, and the AFSK modem DSP — and
+Zephyr or real hardware — AX.25, KISS, FX.25, GPS/NMEA formatting, and the AFSK modem DSP — and
 fails if line coverage on any of those drops below 80%. `tnc.c`, `main.c`,
-`ptt.c`, `mode_select.c`, and the audio drivers aren't covered here; they need
+`ptt.c`, `mode_select.c`, `gps.c`, `tnc_config.c`, and the audio drivers aren't covered here; they need
 a board, see [HIL test plan](#hardware-in-the-loop-hil-test-plan).
 
 There's also a Python reference model of the AFSK modem
@@ -270,7 +381,7 @@ independent of the firmware.
 ## Hardware-in-the-loop (HIL) test plan
 
 `run_tests.sh` covers the Zephyr-free pure-logic modules (AX.25, KISS, FX.25,
-AFSK modem DSP) at ≥80% line coverage on host. It cannot touch anything that
+GPS formatting, AFSK modem DSP) at ≥80% line coverage on host. It cannot touch anything that
 only exists on real silicon: GPIO strapping, hardware PWM audio out, ADC
 audio in, UART timing, or BLE NUS. Those need the actual `promicro_nrf52840`
 board. This is a plan, not a runnable suite yet — no board rig is set up for
@@ -278,9 +389,9 @@ automated HIL runs.
 
 What each untestable-on-host module needs:
 
-1. **`mode_select.c`** — ground/float P0.02 and P0.29 in each of the 4
-   combinations, reboot, confirm `mode_select_get_current()`/boot log report
-   BRIDGE / PACKET_TNC / DIGIPEATER correctly, and that re-strapping is
+1. **`mode_select.c`** — ground/float P0.02, P0.29 and P1.15 in each
+   combination, reboot, confirm `mode_select_get_current()`/boot log report
+   BRIDGE / PACKET_TNC / DIGIPEATER / STANDALONE correctly, and that re-strapping is
    picked up live (no latching).
 2. **`ptt.c`** — scope P0.22 across a TX; confirm it goes active-high only
    for the duration `audio_tx_pwm` is actually playing samples, and idles
@@ -298,7 +409,14 @@ What each untestable-on-host module needs:
 6. **BLE NUS end-to-end** — a phone/PC BLE client sends a KISS frame or
    TNC2 monitor line; confirm it comes out the radio side per the routing
    already unit-tested at the `ax25.c`/`kiss.c` level, and vice versa.
-7. **Full loop**: two boards, one PACKET_TNC and one DIGIPEATER, over actual
+7. **`gps.c`** — in STANDALONE mode with a GPS module on P0.11/P1.00, confirm
+   P1.04 goes high at boot, NMEA shows in the log, and a beacon goes out
+   after the first fix and again every `BEACON` seconds. With
+   `FIXEDPOS=ON`, confirm P1.04 stays low and the stored position beacons.
+8. **`tnc_config.c`** — send each `SET`/`GET` command over BLE, confirm the
+   reply, power-cycle, and confirm values persist. Confirm the UF2 bootloader
+   still works afterwards (NVS must not touch it).
+9. **Full loop**: two boards, one PACKET_TNC and one DIGIPEATER, over actual
    RF or a dummy-load/attenuator link — confirms the whole AFSK+FX.25+KISS
    stack end to end, not just each half in isolation on host.
 
@@ -311,12 +429,13 @@ by hand.
 ```
 src/            firmware source (Zephyr app)
 tools/          host-side Python tooling (AFSK reference model, WAV decoder, log capture)
-app.overlay     devicetree overlay: GPIO straps, ADC channel, PWM pin
+app.overlay     devicetree overlay: GPIO straps, GPS UART/enable, ADC channel, PWM pin, NVS partition
 prj.conf        Zephyr/Kconfig options
 CMakeLists.txt  build target sources
-build.sh        one-shot Zephyr workspace + build
+build.sh        one-shot Zephyr workspace + SDK + build
 run_tests.sh    host-side unit tests + coverage
-bootloader/     nice!nano UF2 bootloader images
+.github/        CI: tag-triggered release workflow
+gerber/         PCB fabrication files
 pcb/            KiCad board design files and BOM (yatnc.kicad_sch, yatnc.kicad_pcb, yatnc.csv)
 images/         PCB 3D render and layout editor screenshots
 ```

@@ -6,6 +6,9 @@ target_sources(app PRIVATE
         src/main.c
         src/mode_select.c
         src/ptt.c
+        src/gps.c
+        src/gps_format.c
+        src/tnc_config.c
         src/ax25.c
         src/fx25.c
         src/kiss.c
